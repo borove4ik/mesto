@@ -13,3 +13,10 @@
     padding-right: 19px;
   }
 }
+
+@media (max-width: 425px) {
+  .content {
+   padding-top: 42px;
+   padding-bottom: 48px;
+  }
+}

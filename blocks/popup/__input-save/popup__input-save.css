@@ -1,4 +1,4 @@
-.popup__form_input_save {
+.popup__input-save {
   background-color: black;
   color: #FFFF;
   font-size: 18px;
@@ -14,12 +14,12 @@
   cursor: pointer;
 }
 
-.popup__form_input_save:hover {
+.popup__input-save:hover {
   opacity: 0.8;
 }
 
 @media (max-width: 770px) {
-  .popup__form_input_save {
+  .popup__input-save {
     font-size: 14px;
     line-height: 17px;
   }

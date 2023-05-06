@@ -1,4 +1,4 @@
-.popup__form_input_bio {
+.popup__input-bio {
   border: none;
   font-size: 14px;
   font-weight: 400;
@@ -12,7 +12,7 @@
 }
 
 @media (max-width: 770px)  {
-  .popup__form_input_bio {
+  .popup__input-bio {
     margin-bottom: 45px;
   }
 }

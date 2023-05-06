@@ -20,9 +20,9 @@
 @import url(../blocks/popup/__close-button/popup__close-button.css);
 @import url(../blocks/popup/__form/popup__form.css);
 @import url(../blocks/popup/__form-title/popup__form-title.css);
-@import url(../blocks/popup/__form/_input/popup__form_input_bio.css);
-@import url(../blocks/popup/__form/_input/popup__form_input_name.css);
-@import url(../blocks/popup/__form/_input/popup__form_input_save.css);
+@import url(../blocks/popup/__input-bio/popup__input-bio.css);
+@import url(../blocks/popup/_input-name/popup__input-name.css);
+@import url(../blocks/popup/__input-save/popup__input-save.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
 @import url(../blocks/gallery/gallery.css);
 @import url(../blocks/gallery/__element-description/gallery__element-description.css);

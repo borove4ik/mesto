@@ -8,4 +8,10 @@
   border: none;
   border-radius: 2px;
   padding: 0;
+  transition: opacity 0.2s ease-in;
+  cursor: pointer;
+}
+
+.gallery__like:hover {
+  opacity: 0.5;
 }

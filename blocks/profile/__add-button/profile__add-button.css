@@ -13,6 +13,12 @@
   border: none;
   border-radius: 2px;
   border: 2px solid #FFFFFF; 
+  transition: opacity 0.2s ease-in;
+  cursor: pointer;
+}
+
+.profile__add-button:hover {
+  opacity: 0.8;
 }
 
 @media (max-width: 770px) {

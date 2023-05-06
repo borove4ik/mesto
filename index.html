@@ -1,47 +1,74 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
-  <title>Место</title>
-</head>
-<body class="page">
-  <header class="header">
-    <img src="./images/mestologo.png" alt="Логотип компании Место Россия" class="header__logo">
-  </header>
-  <main class="content">
-    <section class="profile">
-      <img src="./images/avatar.png" alt="" class="profile__avatar">
-      <div class="profile__info">
-        <div class="profile__name-wrapper">
-        <h1 class="profile__name">Жак-Ив Кусто
-        </h1>
-        <button class="profile__edit-button">
-          <img src="./images/edit-button-pen.png" alt="карандаш для редактирования профиля" class="profile__edit-icon">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./pages/index.css" />
+    <title>Место</title>
+  </head>
+  <body class="page">
+    <header class="header">
+      <img
+        src="./images/mestologo.png"
+        alt="Логотип компании Место Россия"
+        class="header__logo"
+      />
+    </header>
+    <main class="content">
+      <section class="profile">
+        <img src="./images/avatar.png" alt="" class="profile__avatar" />
+        <div class="profile__info">
+          <div class="profile__name-wrapper">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button class="profile__edit-button">
+              <img
+                src="./images/edit-button-pen.png"
+                alt="карандаш для редактирования профиля"
+                class="profile__edit-icon"
+              />
+            </button>
+          </div>
+          <p class="profile__description">Исследователь океана</p>
+        </div>
+        <button class="profile__add-button">
+          <img
+            src="./images/add-button-plus.png"
+            alt="плюс для добавления"
+            class="profile__add-icon"
+          />
+        </button>
+      </section>
+    </main>
+    <div class="popup">
+      <div class="popup__container">
+        <form class="popup__form">
+          <h2 class="popup__form-title">Редактировать профиль</h2>
+          <input
+            type="text"
+            value="Жак-Ив Кусто"
+            class="popup__form_input_name"
+          />
+          <input
+            type="text"
+            value="Исследователь океана"
+            class="popup__form_input_bio"
+          />
+          <input
+            type="submit"
+            value="Сохранить"
+            class="popup__form_input_save"
+          />
+        </form>
+        <button class="popup__close-button">
+          <img
+            src="./images/Close Icon.svg"
+            alt="закрывающий форму крестик"
+            class="popup__close-icon"
+          />
         </button>
       </div>
-        <p class="profile__description">Исследователь океана</p>
-      </div>
-      <button class="profile__add-button">
-        <img src="./images/add-button-plus.png" alt="плюс для добавления" class="profile__add-icon">
-      </button>
-    </section>
-  </main>
-  <div class="popup">
-    <div class="popup__container">
-      <form class="popup__form">
-        <h2 class="popup__form-title">Редактировать профиль</h2>
-        <input type="text" value="Жак-Ив Кусто" class="popup__form_input_name">
-        <input type="text" value="Исследователь океана" class='popup__form_input_bio'>
-        <input type="submit" value="Сохранить" class="popup__form_input_save">
-      </form>
-      <button class="popup__close-button">
-        <img src="./images/Close Icon.svg" alt="закрывающий форму крестик" class="popup__close-icon">
-      </button>
-      </div>
-  </div>
-  <script src="./index.js"></script>
-</body>
+    </div>
+    <script src="./index.js"></script>
+  </body>
 </html>

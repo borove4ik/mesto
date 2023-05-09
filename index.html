@@ -21,7 +21,7 @@
         <div class="profile__info">
           <div class="profile__name-wrapper">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="profile__edit-button">
+            <button class="profile__edit-button" aria-label="редактировать">
               <img
                 src="./images/edit-button-pen.png"
                 alt="карандаш для редактирования профиля"
@@ -31,7 +31,7 @@
           </div>
           <p class="profile__description">Исследователь океана</p>
         </div>
-        <button class="profile__add-button">
+        <button class="profile__add-button" aria-label="Добавить">
           <img
             src="./images/add-button-plus.png"
             alt="плюс для добавления"
@@ -42,51 +42,51 @@
     <section class="gallery">
       <div class="gallery__element">
         <img src="./images/denis-borovets-iu7MOEd5Pso-unsplash.jpg" alt="человек на эскалаторе" class="gallery__photo">
-        <p class="gallery__element-description">
+        <h3 class="gallery__element-description">
           Момент
-          <button class="gallery__like">
+          <button class="gallery__like" aria-label="Нравится">
           </button>
-        </p>
+        </h3>
       </div>
       <div class="gallery__element">
         <img src="./images/denis-borovets-BJmlFjOilY8-unsplash.jpg" alt="Кофейку?" class="gallery__photo">
-        <p class="gallery__element-description">
+        <h3 class="gallery__element-description">
           Кофе
-          <button class="gallery__like">
+          <button class="gallery__like" aria-label="Нравится">
           </button>
-        </p>
+        </h3>
       </div>
       <div class="gallery__element">
         <img src="./images/denis-borovets-U7CwcXbKDR8-unsplash.jpg" alt="Почти Австралия" class="gallery__photo">
-        <p class="gallery__element-description">
+        <h3 class="gallery__element-description">
           Вверх ногами
-          <button class="gallery__like">
+          <button class="gallery__like" aria-label="Нравится">
           </button>
-        </p>
+        </h3>
       </div>
       <div class="gallery__element">
         <img src="./images/denis-borovets-Yz4uaXC-XUY-unsplash.jpg" alt="Абстрактное отражение" class="gallery__photo">
-        <p class="gallery__element-description">
+        <h3 class="gallery__element-description">
           Отражение
-          <button class="gallery__like">
+          <button class="gallery__like" aria-label="Нравится">
           </button>
-        </p>
+        </h3>
       </div>
       <div class="gallery__element">
         <img src="./images/denis-borovets-RwwKIBFCM-s-unsplash.jpg" alt="Кровать в тени с лучами солнца" class="gallery__photo">
-        <p class="gallery__element-description">
+        <h3 class="gallery__element-description">
           Кровать
-          <button class="gallery__like">
+          <button class="gallery__like" aria-label="Нравится">
           </button>
-        </p>
+        </h3>
       </div>
       <div class="gallery__element">
         <img src="./images/denis-borovets-vR7TZ25uCLQ-unsplash.jpg" alt="Окно" class="gallery__photo">
-        <p class="gallery__element-description">
+        <h3 class="gallery__element-description">
           Окно
-          <button class="gallery__like">
+          <button class="gallery__like" aria-label="Нравится">
           </button>
-        </p>
+        </h3>
       </div>
     </section>
   </main>
@@ -95,21 +95,21 @@
     </footer>
     <div class="popup">
       <div class="popup__container">
-        <form class="popup__form">
+        <form class="popup__form" name="profile-edit" method="post">
           <h2 class="popup__form-title">Редактировать профиль</h2>
           <input
             type="text"
-            value="Жак-Ив Кусто"
-            class="popup__input-name"
+            placeholder="Имя"
+            class="popup__input" id="input-name" name="name-edit"
           />
           <input
             type="text"
-            value="Исследователь океана"
-            class="popup__input-bio"
+            placeholder="О себе"
+            class="popup__input" id="input-bio" name="bio-edit"
           />
           <input
             type="submit"
-            value="Сохранить"
+            value="Сохранить" aria-label="Сохрани" name="profile-save"
             class="popup__input-save"
           />
         </form>

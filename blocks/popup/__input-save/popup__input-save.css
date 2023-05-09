@@ -12,6 +12,7 @@
   box-sizing: border-box;
   transition: opacity 0.2s ease-in;
   cursor: pointer;
+  margin-top: 18px;
 }
 
 .popup__input-save:hover {
@@ -22,5 +23,6 @@
   .popup__input-save {
     font-size: 14px;
     line-height: 17px;
+    margin-top: 15px;
   }
 }

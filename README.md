@@ -7,6 +7,8 @@
 
 GitHub
 
+Использован стек: HTML - CSS - JavaScript
+
 * Ссылка на проект: https://borove4ik.github.io/mesto/
 
 **Картинки**

@@ -5,4 +5,7 @@
   align-items: center;
   background-color: #FFFF;
   color: black;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; 
 }

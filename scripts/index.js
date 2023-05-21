@@ -41,11 +41,16 @@ const cardTemplate = document.querySelector('#gallery__element').content
 const gallery = document.querySelector('.gallery')
 
 const renderCard = (cardContent) => {
-  const card = cardTemplate.querySelector('.gallery__element').cloneNode(true)
-  card.querySelector('.gallery__element-description').textContent = cardContent.name
-  card.querySelector('.gallery__photo').src = cardContent.link
-  gallery.prepend(card)
-}
+  const card = cardTemplate.querySelector(".gallery__element").cloneNode(true);
+  const likeButton = card.querySelector('.gallery__like')
+
+  card.querySelector(".gallery__element-description").textContent = cardContent.name;
+  card.querySelector(".gallery__photo").src = cardContent.link;
+  likeButton.addEventListener("click", (evt) => {
+    evt.target.classList.toggle('gallery__like_active')
+  })
+  gallery.prepend(card);
+};
 
 function preRenderGallery (cards) {
   cards.forEach(currentCard => {
@@ -96,6 +101,7 @@ function handleCardSubmit (evt) {
   renderCard (card)
   popupClose()
 }
+
 
 profileFormElement.addEventListener('submit', handleFormSubmit);
 placeFormElement.addEventListener('submit', handleCardSubmit);

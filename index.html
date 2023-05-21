@@ -47,7 +47,7 @@
     </footer>
     <div class="popup">
       <div class="popup__container">
-        <form class="popup__form" name="profile-edit" method="post">
+        <form class="popup__form" id="profile-edit" name="profile-edit" method="post">
           <h2 class="popup__form-title">Редактировать профиль</h2>
           <input
             type="text"
@@ -85,6 +85,35 @@
         </div>
       </div>
     </template>
+    <div class="popup popup__new-place">
+      <div class="popup__container">
+        <form class="popup__form" id="place-edit" name="place-edit" method="post">
+          <h2 class="popup__form-title">Новое место</h2>
+          <input
+            type="text"
+            placeholder="Название"
+            class="popup__input" id="input-place" name="place-edit"
+          />
+          <input
+            type="text"
+            placeholder="Ссылка на картинку"
+            class="popup__input" id="input-link" name="link-edit"
+          />
+          <input
+            type="submit"
+            value="Создать" aria-label="Создай" name="post-create"
+            class="popup__input-save"
+          />
+        </form>
+        <button class="popup__close-button" type="button">
+          <img
+            src="./images/Close-Icon.svg"
+            alt="закрывающий форму крестик"
+            class="popup__close-icon"
+          />
+        </button>
+      </div>
+    </div>
     <script src="./scripts/index.js"></script>
   </body>
 </html>

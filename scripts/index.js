@@ -1,11 +1,16 @@
-let formElement = document.querySelector('.popup__form');
-let popupWindow = document.querySelector('.popup');
-let nameInput = document.querySelector('#input-name');
-let jobInput = document.querySelector('#input-bio');
-let popupTrigger = document.querySelector('.profile__edit-button');
-let popupClose = document.querySelector('.popup__close-button');
-let profileName = document.querySelector('.profile__name');
-let jobName = document.querySelector('.profile__description');
+const profileFormElement = document.querySelector('#profile-edit');
+const placeFormElement = document.querySelector('#place-edit');
+const popupWindow = document.querySelector('.popup');
+const popupNewPlace = document.querySelector('.popup__new-place')
+const nameInput = document.querySelector('#input-name');
+const jobInput = document.querySelector('#input-bio');
+const placeInput = document.querySelector('#input-place');
+const linkInput = document.querySelector('#input-link');
+const popupTrigger = document.querySelector('.profile__edit-button');
+const popupCloseButtons = document.querySelectorAll('.popup__close-button');
+const profileName = document.querySelector('.profile__name');
+const jobName = document.querySelector('.profile__description');
+const newPlacePopupTrigger = document.querySelector('.profile__add-button');
 const initialCards = [
   {
     name: 'Момент',
@@ -39,7 +44,7 @@ const renderCard = (cardContent) => {
   const card = cardTemplate.querySelector('.gallery__element').cloneNode(true)
   card.querySelector('.gallery__element-description').textContent = cardContent.name
   card.querySelector('.gallery__photo').src = cardContent.link
-  gallery.append(card)
+  gallery.prepend(card)
 }
 
 function preRenderGallery (cards) {
@@ -49,8 +54,8 @@ function preRenderGallery (cards) {
 }
 preRenderGallery(initialCards)
 
-function formClose () {
-  popupWindow.classList.remove('popup_opened')
+function popupClose () {
+  document.querySelectorAll('.popup').forEach(item => item.classList.remove('popup_opened'))
 }
 
 function formOpen () {
@@ -59,18 +64,40 @@ function formOpen () {
   popupWindow.classList.add ('popup_opened')
 }
 
+function closePlacePopup () {
+  popupNewPlace.classList.remove('popup_opened');
+}
+
+function openPlacePopup () {
+  popupNewPlace.classList.add ('popup_opened')
+}
+
 popupTrigger.addEventListener('click', formOpen);
 
-popupClose.addEventListener('click', formClose);
+popupCloseButtons.forEach(popupCloseButton => {
+  popupCloseButton.addEventListener('click', popupClose);
+})
+
+newPlacePopupTrigger.addEventListener('click', openPlacePopup);
 
 function handleFormSubmit (evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   jobName.textContent = jobInput.value;
-  formClose ()
+  popupClose()
 }
 
-formElement.addEventListener('submit', handleFormSubmit);
+function handleCardSubmit (evt) {
+  evt.preventDefault();
+  let card = {
+    name: placeInput.value,
+    link: linkInput.value
+  }
+  renderCard (card)
+  popupClose()
+}
 
+profileFormElement.addEventListener('submit', handleFormSubmit);
+placeFormElement.addEventListener('submit', handleCardSubmit);
 
 

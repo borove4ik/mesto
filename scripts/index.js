@@ -38,7 +38,9 @@ const initialCards = [
   }
 ]
 const cardTemplate = document.querySelector('#gallery__element').content
-const gallery = document.querySelector('.gallery')
+const gallery = document.querySelector('.gallery');
+
+let trashButtons;
 
 const renderCard = (cardContent) => {
   const card = cardTemplate.querySelector(".gallery__element").cloneNode(true);
@@ -56,6 +58,7 @@ function preRenderGallery (cards) {
   cards.forEach(currentCard => {
     renderCard(currentCard)
   });
+  trashButtons = document.querySelectorAll('.gallery__trash');
 }
 preRenderGallery(initialCards)
 
@@ -102,8 +105,22 @@ function handleCardSubmit (evt) {
   popupClose()
 }
 
+function removePhoto(evt) {
+  if (!evt.target.closest('.gallery__trash')){
+    return;
+  }
+
+  let parent = evt.target.parentElement;
+  
+  if (!evt.target.classList.contains('gallery__trash')) {
+    parent = parent.parentElement
+  }
+
+  parent.remove();
+
+}
 
 profileFormElement.addEventListener('submit', handleFormSubmit);
 placeFormElement.addEventListener('submit', handleCardSubmit);
-
+gallery.addEventListener('click', removePhoto)
 

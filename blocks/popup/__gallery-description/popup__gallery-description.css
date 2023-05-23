@@ -1,0 +1,9 @@
+.popup__gallery-description {
+  position: absolute;
+  margin: 0;
+  top: 100%;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  padding-top: 10px;
+}

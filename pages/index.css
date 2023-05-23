@@ -33,3 +33,6 @@
 @import url(../blocks/gallery/__trash/gallery__trash.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
+@import url(../blocks/popup/__gallery-container/popup__gallery-container.css);
+@import url(../blocks/popup/__gallery-description/popup__gallery-description.css);
+@import url(../blocks/popup/__gallery-photo/popup__gallery-photo.css);

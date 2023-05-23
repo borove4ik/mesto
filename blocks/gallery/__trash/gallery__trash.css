@@ -9,7 +9,6 @@
   right: 20px;
   top: 20px;
   transition: opacity 0.2s ease-in;
-  cursor: pointer;
 }
 
 .gallery__trash:hover {

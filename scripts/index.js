@@ -1,7 +1,7 @@
 const profileFormElement = document.querySelector("#profile-edit");
 const placeFormElement = document.querySelector("#place-edit");
 const popupWindow = document.querySelector(".popup");
-const popupNewPlace = document.querySelector(".popup__new-place");
+const popupNewPlace = document.querySelector(".popup-new-place");
 const nameInput = document.querySelector("#input-name");
 const jobInput = document.querySelector("#input-bio");
 const placeInput = document.querySelector("#input-place");
@@ -11,7 +11,7 @@ const popupCloseButtons = document.querySelectorAll(".popup__close-button");
 const profileName = document.querySelector(".profile__name");
 const jobName = document.querySelector(".profile__description");
 const newPlacePopupTrigger = document.querySelector(".profile__add-button");
-const popupCard = document.querySelector('.popup__open-card');
+const popupCard = document.querySelector('.popup-open-card');
 const initialCards = [
   {
     name: "Момент",

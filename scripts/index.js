@@ -1,6 +1,6 @@
 const profileFormElement = document.querySelector("#profile-edit");
 const placeFormElement = document.querySelector("#place-edit");
-const popupWindow = document.querySelector(".popup");
+const profilePopup = document.querySelector(".profile-popup");
 const popupNewPlace = document.querySelector(".popup-new-place");
 const nameInput = document.querySelector("#input-name");
 const jobInput = document.querySelector("#input-bio");
@@ -67,16 +67,16 @@ function preRenderGallery(cards) {
 }
 preRenderGallery(initialCards);
 
-function popupClose() {
+function closePopup() {
   document
     .querySelectorAll(".popup")
     .forEach((item) => item.classList.remove("popup_opened"));
 }
 
-function formOpen() {
+function openPopup() {
   nameInput.value = profileName.textContent;
   jobInput.value = jobName.textContent;
-  popupWindow.classList.add("popup_opened");
+  profilePopup.classList.add("popup_opened");
 }
 
 function closePlacePopup() {
@@ -87,10 +87,10 @@ function openPlacePopup() {
   popupNewPlace.classList.add("popup_opened");
 }
 
-popupTrigger.addEventListener("click", formOpen);
+popupTrigger.addEventListener("click", openPopup);
 
 popupCloseButtons.forEach((popupCloseButton) => {
-  popupCloseButton.addEventListener("click", popupClose);
+  popupCloseButton.addEventListener("click", closePopup);
 });
 
 newPlacePopupTrigger.addEventListener("click", openPlacePopup);
@@ -99,7 +99,7 @@ function handleFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   jobName.textContent = jobInput.value;
-  popupClose();
+  closePopup();
 }
 
 function handleCardSubmit(evt) {
@@ -109,7 +109,7 @@ function handleCardSubmit(evt) {
     link: linkInput.value,
   };
   renderCard(card);
-  popupClose();
+  closePopup();
 }
 
 function galleryClickHandler(evt) {

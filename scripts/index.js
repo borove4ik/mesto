@@ -1,7 +1,7 @@
 const profileFormElement = document.querySelector("#profile-edit");
 const placeFormElement = document.querySelector("#place-edit");
-const profilePopup = document.querySelector(".profile-popup");
-const popupNewPlace = document.querySelector(".popup-new-place");
+const profilePopup = document.querySelector("#profile-popup");
+const popupNewPlace = document.querySelector("#popup-new-place");
 const nameInput = document.querySelector("#input-name");
 const jobInput = document.querySelector("#input-bio");
 const placeInput = document.querySelector("#input-place");
@@ -11,7 +11,7 @@ const popupCloseButtons = document.querySelectorAll(".popup__close-button");
 const profileName = document.querySelector(".profile__name");
 const jobName = document.querySelector(".profile__description");
 const newPlacePopupTrigger = document.querySelector(".profile__add-button");
-const popupCard = document.querySelector('.popup-open-card');
+const popupCard = document.querySelector("#popup-open-card");
 const initialCards = [
   {
     name: "Момент",
@@ -41,100 +41,101 @@ const initialCards = [
 const cardTemplate = document.querySelector("#gallery__element").content;
 const gallery = document.querySelector(".gallery");
 
-let trashButtons;
+const popupPhoto = popupCard.querySelector(".popup__gallery-photo");
+const popupText = popupCard.querySelector(".popup__gallery-description");
 
-const renderCard = (cardContent) => {
+const createCard = (cardContent) => {
   const card = cardTemplate.querySelector(".gallery__element").cloneNode(true);
   const likeButton = card.querySelector(".gallery__like");
 
   card.querySelector(".gallery__element-description").textContent =
     cardContent.name;
   const galleryPhoto = card.querySelector(".gallery__photo");
-  
+
   galleryPhoto.src = cardContent.link;
   galleryPhoto.alt = cardContent.name;
+  
   likeButton.addEventListener("click", (evt) => {
-    evt.target.classList.toggle("gallery__like_active");
+    evt.currentTarget.classList.toggle("gallery__like_active");
   });
-  gallery.prepend(card);
+  return card;
 };
 
-function preRenderGallery(cards) {
+const renderGallery = (cards) => {
   cards.forEach((currentCard) => {
-    renderCard(currentCard);
+    gallery.append(createCard (currentCard));
   });
-  trashButtons = document.querySelectorAll(".gallery__trash");
-}
-preRenderGallery(initialCards);
-
-function closePopup() {
-  document
-    .querySelectorAll(".popup")
-    .forEach((item) => item.classList.remove("popup_opened"));
 }
 
-function openPopup() {
-  nameInput.value = profileName.textContent;
-  jobInput.value = jobName.textContent;
-  profilePopup.classList.add("popup_opened");
+renderGallery(initialCards);
+
+const openPopup = (currentPopup, evt) => {
+  currentPopup.classList.add("popup_opened");
+  const closeButton = currentPopup.querySelector('.popup__close-button');
+  closeButton.addEventListener('click', () => closePopup(currentPopup));
+  if (currentPopup.id === 'profile-popup') {
+    bindProfileOutput();
+  }else if (currentPopup.id === 'popup-open-card') {
+    const imageSrc = evt.target.getAttribute("src");
+    const imageAlt = evt.target.getAttribute("alt");
+    const targetCard = evt.target.closest(
+      ".gallery__element"
+    );
+    const imageText = targetCard.querySelector('.gallery__element-description');
+    
+    popupPhoto.setAttribute("src", imageSrc);
+    popupPhoto.setAttribute("alt", imageAlt);
+    popupText.textContent = imageText.textContent;
+  }
+}
+const bindProfileOutput = () => {
+profileName.textContent = nameInput.value;
+jobName.textContent = jobInput.value;
 }
 
-function closePlacePopup() {
-  popupNewPlace.classList.remove("popup_opened");
+const closePopup = (currentPopup) => {
+  currentPopup.classList.remove("popup_opened");
 }
 
-function openPlacePopup() {
-  popupNewPlace.classList.add("popup_opened");
-}
+popupTrigger.addEventListener("click", () => openPopup(profilePopup));
 
-popupTrigger.addEventListener("click", openPopup);
+newPlacePopupTrigger.addEventListener("click", () => openPopup(popupNewPlace));
 
-popupCloseButtons.forEach((popupCloseButton) => {
-  popupCloseButton.addEventListener("click", closePopup);
-});
-
-newPlacePopupTrigger.addEventListener("click", openPlacePopup);
-
-function handleFormSubmit(evt) {
+const handleFormSubmit = (evt) => {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   jobName.textContent = jobInput.value;
-  closePopup();
+  closePopup(profilePopup);
+  profileFormElement.reset();
 }
 
-function handleCardSubmit(evt) {
+const handleCardSubmit = (evt) => {
   evt.preventDefault();
-  let card = {
+  const card = {
     name: placeInput.value,
     link: linkInput.value,
   };
-  renderCard(card);
-  closePopup();
+  gallery.prepend(createCard(card));
+  closePopup(popupNewPlace);
+  placeFormElement.reset();
 }
 
-function galleryClickHandler(evt) {
+const handleGalleryClick = (evt) => {
   if (evt.target.closest(".gallery__trash")) {
-    let parent = evt.target.parentElement;
+    let parent = evt.target.closest('.gallery__trash');
 
     if (!evt.target.classList.contains("gallery__trash")) {
-      parent = parent.parentElement;
+      parent = parent.closest('.gallery__element');
     }
 
     parent.remove();
   }
   if (evt.target.closest('.gallery__photo')) {
-    const imageSrc = evt.target.getAttribute('src');
-    const imageAlt = evt.target.getAttribute('alt');
-    const imageText = evt.target.nextElementSibling.querySelector('.gallery__element-description');
-    const popupPhoto = popupCard.querySelector('.popup__gallery-photo');
-    const popupText = popupCard.querySelector('.popup__gallery-description');
-    popupPhoto.setAttribute('src', imageSrc);
-    popupPhoto.setAttribute('alt', imageAlt);
-    popupText.textContent = imageText.textContent;
-    popupCard.classList.add('popup_opened');
+   openPopup(popupCard, evt)
   }
 }
 
 profileFormElement.addEventListener("submit", handleFormSubmit);
 placeFormElement.addEventListener("submit", handleCardSubmit);
-gallery.addEventListener("click", galleryClickHandler);
+gallery.addEventListener('click', handleGalleryClick)
+

@@ -96,8 +96,8 @@ if (currentPopup.id === "profile-popup") {
   }
 
 const bindProfileOutput = () => {
-  profileName.textContent = nameInput.value;
-  jobName.textContent = jobInput.value;
+  nameInput.value = profileName.textContent ;
+  jobInput.value = jobName.textContent;
 };
 
 const closePopup = (currentPopup) => {

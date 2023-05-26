@@ -69,14 +69,29 @@ const renderGallery = (cards) => {
 
 renderGallery(initialCards);
 
-const openPopup = (currentPopup, evt) => {
-  currentPopup.classList.add("popup_opened");
+const bindCloseButton = (currentPopup) => {
   const closeButton = currentPopup.querySelector(".popup__close-button");
   closeButton.addEventListener("click", () => closePopup(currentPopup));
-  if (currentPopup.id === "profile-popup") {
+}
+bindCloseButton (profilePopup);
+bindCloseButton (popupNewPlace);
+bindCloseButton (popupCard);
+
+const openPopup = (currentPopup) => {
+  currentPopup.classList.add("popup_opened");
+}
+
+const renderPopup = (currentPopup, evt) => {
+  openPopup(currentPopup)
+if (currentPopup.id === "profile-popup") {
     bindProfileOutput();
   } else if (currentPopup.id === "popup-open-card") {
-    const imageSrc = evt.target.getAttribute("src");
+    generatePhotoPopup(evt);
+   }
+  }
+  
+  const generatePhotoPopup = (evt) => { 
+   const imageSrc = evt.target.getAttribute("src");
     const imageAlt = evt.target.getAttribute("alt");
     const targetCard = evt.target.closest(".gallery__element");
     const imageText = targetCard.querySelector(".gallery__element-description");
@@ -85,7 +100,7 @@ const openPopup = (currentPopup, evt) => {
     popupPhoto.setAttribute("alt", imageAlt);
     popupText.textContent = imageText.textContent;
   }
-};
+
 const bindProfileOutput = () => {
   profileName.textContent = nameInput.value;
   jobName.textContent = jobInput.value;
@@ -95,9 +110,9 @@ const closePopup = (currentPopup) => {
   currentPopup.classList.remove("popup_opened");
 };
 
-popupTrigger.addEventListener("click", () => openPopup(profilePopup));
+popupTrigger.addEventListener("click", () => renderPopup(profilePopup));
 
-newPlacePopupTrigger.addEventListener("click", () => openPopup(popupNewPlace));
+newPlacePopupTrigger.addEventListener("click", () => renderPopup(popupNewPlace));
 
 const handleFormSubmit = (evt) => {
   evt.preventDefault();
@@ -129,7 +144,7 @@ const handleGalleryClick = (evt) => {
     parent.remove();
   }
   if (evt.target.closest(".gallery__photo")) {
-    openPopup(popupCard, evt);
+    renderPopup(popupCard, evt);
   }
 };
 

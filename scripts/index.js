@@ -2,6 +2,7 @@ const profileFormElement = document.querySelector("#profile-edit");
 const placeFormElement = document.querySelector("#place-edit");
 const profilePopup = document.querySelector("#profile-popup");
 const popupNewPlace = document.querySelector("#popup-new-place");
+const popupCard = document.querySelector("#popup-open-card");
 const nameInput = document.querySelector("#input-name");
 const jobInput = document.querySelector("#input-bio");
 const placeInput = document.querySelector("#input-place");
@@ -11,7 +12,10 @@ const popupCloseButtons = document.querySelectorAll(".popup__close-button");
 const profileName = document.querySelector(".profile__name");
 const jobName = document.querySelector(".profile__description");
 const newPlacePopupTrigger = document.querySelector(".profile__add-button");
-const popupCard = document.querySelector("#popup-open-card");
+const cardTemplate = document.querySelector("#gallery__element").content;
+const gallery = document.querySelector(".gallery");
+const popupPhoto = popupCard.querySelector(".popup__gallery-photo");
+const popupText = popupCard.querySelector(".popup__gallery-description");
 const initialCards = [
   {
     name: "Момент",
@@ -38,19 +42,14 @@ const initialCards = [
     link: "./images/denis-borovets-vR7TZ25uCLQ-unsplash.jpg",
   },
 ];
-const cardTemplate = document.querySelector("#gallery__element").content;
-const gallery = document.querySelector(".gallery");
-
-const popupPhoto = popupCard.querySelector(".popup__gallery-photo");
-const popupText = popupCard.querySelector(".popup__gallery-description");
 
 const createCard = (cardContent) => {
   const card = cardTemplate.querySelector(".gallery__element").cloneNode(true);
   const likeButton = card.querySelector(".gallery__like");
-
+  const galleryPhoto = card.querySelector(".gallery__photo");
+  
   card.querySelector(".gallery__element-description").textContent =
     cardContent.name;
-  const galleryPhoto = card.querySelector(".gallery__photo");
 
   galleryPhoto.src = cardContent.link;
   galleryPhoto.alt = cardContent.name;
@@ -67,15 +66,10 @@ const renderGallery = (cards) => {
   });
 };
 
-renderGallery(initialCards);
-
 const bindCloseButton = (currentPopup) => {
   const closeButton = currentPopup.querySelector(".popup__close-button");
   closeButton.addEventListener("click", () => closePopup(currentPopup));
 }
-bindCloseButton (profilePopup);
-bindCloseButton (popupNewPlace);
-bindCloseButton (popupCard);
 
 const openPopup = (currentPopup) => {
   currentPopup.classList.add("popup_opened");
@@ -109,10 +103,6 @@ const bindProfileOutput = () => {
 const closePopup = (currentPopup) => {
   currentPopup.classList.remove("popup_opened");
 };
-
-popupTrigger.addEventListener("click", () => renderPopup(profilePopup));
-
-newPlacePopupTrigger.addEventListener("click", () => renderPopup(popupNewPlace));
 
 const handleFormSubmit = (evt) => {
   evt.preventDefault();
@@ -148,6 +138,13 @@ const handleGalleryClick = (evt) => {
   }
 };
 
+renderGallery(initialCards);
+bindCloseButton (profilePopup);
+bindCloseButton (popupNewPlace);
+bindCloseButton (popupCard);
+
+popupTrigger.addEventListener("click", () => renderPopup(profilePopup));
+newPlacePopupTrigger.addEventListener("click", () => renderPopup(popupNewPlace));
 profileFormElement.addEventListener("submit", handleFormSubmit);
 placeFormElement.addEventListener("submit", handleCardSubmit);
 gallery.addEventListener("click", handleGalleryClick);

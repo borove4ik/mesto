@@ -53,11 +53,17 @@
             type="text"
             placeholder="Имя"
             class="popup__input" id="input-name" name="name-edit"
+            minlength="2"
+            maxlength="40"
+            required
           />
           <input
             type="text"
             placeholder="О себе"
             class="popup__input" id="input-bio" name="bio-edit"
+            minlength="2"
+            maxlength="200"
+            required
           />
           <input
             type="submit"
@@ -96,11 +102,15 @@
             type="text"
             placeholder="Название"
             class="popup__input" id="input-place" name="place-edit"
+            minlength="2"
+            maxlength="30"
+            required
           />
           <input
             type="text"
             placeholder="Ссылка на картинку"
-            class="popup__input" id="input-link" name="link-edit"
+            class="popup__input" id="input-link" name="link-edit" type="url"
+            required
           />
           <input
             type="submit"
@@ -132,5 +142,6 @@
       </div>
     </div>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js"></script>
   </body>
 </html>

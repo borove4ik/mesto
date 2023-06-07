@@ -45,9 +45,9 @@
     <footer class="footer">
       <p class="footer__copyright">© 2023 Mesto Russia</p>
     </footer>
-    <div class="popup" id="profile-popup">
+    <div class="popup" id="profile-popup" tabindex="1">
       <div class="popup__container">
-        <form class="popup__form" id="profile-edit" name="profile-edit" method="post">
+        <form class="popup__form" id="profile-edit" name="profile-edit" method="post" novalidate>
           <h2 class="popup__form-title">Редактировать профиль</h2>
           <input
             type="text"
@@ -57,6 +57,8 @@
             maxlength="40"
             required
           />
+          <span class="popup__error_visible" id="input-name-error">
+          </span>
           <input
             type="text"
             placeholder="О себе"
@@ -65,10 +67,11 @@
             maxlength="200"
             required
           />
+          <span class="popup__error_visible" id="input-bio-error"></span>
           <input
             type="submit"
             value="Сохранить" aria-label="Сохрани" name="profile-save"
-            class="popup__input-save"
+            class="popup__button"
           />
         </form>
         <button class="popup__close-button" type="button">
@@ -96,7 +99,7 @@
     </template>
     <div class="popup" id="popup-new-place">
       <div class="popup__container">
-        <form class="popup__form" id="place-edit" name="place-edit" method="post">
+        <form class="popup__form" id="place-edit" name="place-edit" method="post" novalidate>
           <h2 class="popup__form-title">Новое место</h2>
           <input
             type="text"
@@ -106,16 +109,20 @@
             maxlength="30"
             required
           />
+          <span class="popup__error_visible" id="input-place-error">
+          </span>
           <input
-            type="text"
+            type="url"
             placeholder="Ссылка на картинку"
-            class="popup__input" id="input-link" name="link-edit" type="url"
+            class="popup__input" id="input-link" name="link-edit"
             required
           />
+          <span class="popup__error_visible" id="input-link-error">
+          </span>
           <input
             type="submit"
             value="Создать" aria-label="Создай" name="post-create"
-            class="popup__input-save"
+            class="popup__button"
           />
         </form>
         <button class="popup__close-button" type="button">

@@ -1,4 +1,4 @@
-.popup__input-save {
+.popup__button {
   background-color: black;
   color: #FFFF;
   font-size: 18px;
@@ -15,12 +15,16 @@
   margin-top: 18px;
 }
 
-.popup__input-save:hover {
+.popup__button:hover {
   opacity: 0.8;
 }
 
+.popup__button:disabled {
+  background: #E5E5E5;
+}
+
 @media (max-width: 770px) {
-  .popup__input-save {
+  .popup__button {
     font-size: 14px;
     line-height: 17px;
     margin-top: 15px;

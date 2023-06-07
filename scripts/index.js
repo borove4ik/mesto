@@ -85,14 +85,14 @@ const bindCloseButton = (currentPopup, formElement) => {
 const openPopup = (currentPopup) => {
   currentPopup.classList.add("popup_opened");
   currentPopup.focus();
+  document.addEventListener("keydown", (evt) => {
+    if (evt.key === "Escape") {
+      const openedPopup = document.querySelector(".popup_opened");
+      openedPopup && closePopup(openedPopup);
+      document.removeEventListener('keydown', evt)
+    }
+  });
 };
-
-document.addEventListener("keydown", (evt) => {
-  if (evt.key === "Escape") {
-    let openedPopup = document.querySelector(".popup_opened");
-    openedPopup && closePopup(openedPopup);
-  }
-});
 
 document.querySelectorAll(".popup").forEach((item) => {
   item.addEventListener("click", (evt) => {

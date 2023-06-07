@@ -20,12 +20,14 @@ const inputElement = document.querySelector(formData.inputSelector);
 
 const showError = (formData, inputElement) => {
   const errorInput = document.querySelector(`#${inputElement.id}-error`);
+  errorInput.classList.add(formData.errorClass);
   errorInput.textContent = inputElement.validationMessage;
   inputElement.classList.add(formData.inputErrorClass);
 };
 
 const hideError = (formData, inputElement) => {
   const errorInput = document.querySelector(`#${inputElement.id}-error`);
+  errorInput.classList.remove(formData.errorClass);
   errorInput.textContent = "";
   inputElement.classList.remove(formData.inputErrorClass);
 };

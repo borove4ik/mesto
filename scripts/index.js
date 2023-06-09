@@ -82,16 +82,18 @@ const bindCloseButton = (currentPopup, formElement) => {
   );
 };
 
+const closeByEsc = (evt) => {
+  if (evt.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_opened");
+    closePopup(openedPopup);
+    console.log('ya rabotayuu')
+  }
+}
+
 const openPopup = (currentPopup) => {
   currentPopup.classList.add("popup_opened");
   currentPopup.focus();
-  document.addEventListener("keydown", (evt) => {
-    if (evt.key === "Escape") {
-      const openedPopup = document.querySelector(".popup_opened");
-      openedPopup && closePopup(openedPopup);
-      document.removeEventListener('keydown', evt)
-    }
-  });
+  document.addEventListener("keydown", closeByEsc)
 };
 
 document.querySelectorAll(".popup").forEach((item) => {
@@ -139,6 +141,7 @@ const closePopup = (currentPopup, formElement) => {
     item.textContent = "";
   });
   enableSubmit();
+  document.removeEventListener('keydown', closeByEsc);
 };
 
 const handleFormSubmit = (evt) => {

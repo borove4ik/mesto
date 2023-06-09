@@ -104,16 +104,20 @@ document.querySelectorAll(".popup").forEach((item) => {
   });
 });
 
-const renderPopup = (currentPopup, evt) => {
+const renderProfilePopup = (currentPopup) => {
   openPopup(currentPopup);
-  if (currentPopup.id === "profile-popup") {
-    bindProfileOutput();
-  } else if (currentPopup.id === "popup-open-card") {
-    generatePhotoPopup(evt);
-  } else {
-    disableSubmit();
-  }
-};
+  bindProfileOutput();
+}
+
+const renderPlacePopup = (currentPopup) => {
+  openPopup(currentPopup);
+  disableSubmit();
+}
+
+const renderGalleryPopup = (currentPopup, evt) => {
+  openPopup(currentPopup);
+  generatePhotoPopup(evt);
+}
 
 const generatePhotoPopup = (evt) => {
   const imageSrc = evt.target.getAttribute("src");
@@ -172,7 +176,7 @@ const handleGalleryClick = (evt) => {
     parent.remove();
   }
   if (evt.target.closest(".gallery__photo")) {
-    renderPopup(popupCard, evt);
+    renderGalleryPopup(popupCard, evt);
   }
 };
 
@@ -181,9 +185,9 @@ bindCloseButton(profilePopup, profileFormElement);
 bindCloseButton(popupNewPlace, placeFormElement);
 bindCloseButton(popupCard);
 
-popupTrigger.addEventListener("click", () => renderPopup(profilePopup));
+popupTrigger.addEventListener("click", () => renderProfilePopup(profilePopup));
 newPlacePopupTrigger.addEventListener("click", () =>
-  renderPopup(popupNewPlace)
+  renderPlacePopup(popupNewPlace)
 );
 profileFormElement.addEventListener("submit", handleFormSubmit);
 placeFormElement.addEventListener("submit", handleCardSubmit);

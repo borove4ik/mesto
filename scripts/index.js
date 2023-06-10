@@ -51,13 +51,21 @@ document.querySelectorAll(".popup").forEach((item) => {
 });
 
 const hideErrorAndEnableSubmit = (currentPopup, formElement, isEnableSubmit = false) => {
-  const input = currentPopup.querySelectorAll(formData.inputSelector) ;
+  const input = currentPopup.querySelectorAll(formData.inputSelector);
+  
+  let submitButton;
+  
   input.forEach((item) => {
     hideError(formData, item, formElement);
-    if (isEnableSubmit) {
-      enableSubmit(formData);
+
+    if (!submitButton) {
+      submitButton = item.parentNode.querySelector('.popup__button');
     }
   });
+
+  if (submitButton && isEnableSubmit) {
+    enableSubmit(submitButton);
+  }
 }
 
 const renderProfilePopup = (currentPopup) => {
@@ -68,7 +76,6 @@ const renderProfilePopup = (currentPopup) => {
 
 const renderPlacePopup = (currentPopup, formData) => {
   openPopup(currentPopup);
-  disableSubmit(formData);
   hideErrorAndEnableSubmit(currentPopup, placeFormElement)
   
 };

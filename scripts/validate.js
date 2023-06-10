@@ -16,8 +16,6 @@ const enableSubmit = () => {
   });
 };
 
-const inputElement = document.querySelector(formData.inputSelector);
-
 const showError = (formData, inputElement) => {
   const errorInput = document.querySelector(`#${inputElement.id}-error`);
   errorInput.classList.add(formData.errorClass);
@@ -27,6 +25,7 @@ const showError = (formData, inputElement) => {
 
 const hideError = (formData, inputElement) => {
   const errorInput = document.querySelector(`#${inputElement.id}-error`);
+  console.log(errorInput)
   errorInput.classList.remove(formData.errorClass);
   errorInput.textContent = "";
   inputElement.classList.remove(formData.inputErrorClass);
@@ -68,9 +67,6 @@ const enableValidation = (formData) => {
   const popupForm = document.querySelectorAll(formData.formSelector);
   popupForm.forEach((currentForm) => {
     setEventListeners(currentForm, formData);
-    currentForm.addEventListener("submit", (evt) => {
-      evt.preventDefault;
-    });
   });
 };
 

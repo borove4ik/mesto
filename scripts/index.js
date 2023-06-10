@@ -105,8 +105,7 @@ const handleFormSubmit = (evt) => {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   jobName.textContent = jobInput.value;
-  closePopup(profilePopup, profileFormElement);
-  popupReset(profilePopup, profileFormElement);
+  closePopup(profilePopup);
 };
 
 const handleCardSubmit = (evt) => {
@@ -117,7 +116,6 @@ const handleCardSubmit = (evt) => {
   };
   gallery.prepend(createCard(card));
   closePopup(popupNewPlace, placeFormElement);
-  popupReset(popupNewPlace, placeFormElement);
 };
 
 const handleGalleryClick = (evt) => {

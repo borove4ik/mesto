@@ -21,22 +21,11 @@ const renderGallery = (cards) => {
   });
 };
 
-const bindCloseButton = (currentPopup, formElement, formData) => {
+const bindCloseButton = (currentPopup) => {
   const closeButton = currentPopup.querySelector(".popup__close-button");
   closeButton.addEventListener("click", () => {
-    closePopup(currentPopup, formElement);
-    
+    closePopup(currentPopup);
   }
-  );
-};
-
-
-const bindClosePopupCardButton = (currentPopup) => {
-  const bindClosePopupCard = currentPopup.querySelector(
-    "#pop-close-photo-button"
-  );
-  bindClosePopupCard.addEventListener("click", () =>
-    closePopupCard(currentPopup)
   );
 };
 
@@ -56,7 +45,7 @@ const openPopup = (currentPopup) => {
 document.querySelectorAll(".popup").forEach((item) => {
     item.addEventListener("click", (evt) => {
       if (evt.target === item) {
-        closePopupCard(item);
+        closePopup(item);
       }
     });
 });
@@ -110,10 +99,7 @@ const closePopup = (currentPopup) => {
   document.removeEventListener("keydown", closeByEsc);
 };
 
-const closePopupCard = (currentPopup) => {
-  currentPopup.classList.remove("popup_opened");
-  document.removeEventListener("keydown", closeByEsc);
-};
+
 
 const handleFormSubmit = (evt) => {
   evt.preventDefault();
@@ -150,9 +136,9 @@ const handleGalleryClick = (evt) => {
 };
 
 renderGallery(initialCards);
-bindCloseButton(profilePopup, profileFormElement, formData);
-bindCloseButton(popupNewPlace, placeFormElement, formData);
-bindClosePopupCardButton(popupCard);
+bindCloseButton(profilePopup);
+bindCloseButton(popupNewPlace);
+bindCloseButton(popupCard);
 
 popupTrigger.addEventListener("click", () => renderProfilePopup(profilePopup));
 newPlacePopupTrigger.addEventListener("click", () =>

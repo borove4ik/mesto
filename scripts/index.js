@@ -25,11 +25,7 @@ const bindCloseButton = (currentPopup, formElement, formData) => {
   const closeButton = currentPopup.querySelector(".popup__close-button");
   closeButton.addEventListener("click", () => {
     closePopup(currentPopup, formElement);
-    const input = currentPopup.querySelectorAll(formData.inputSelector) ;
-    input.forEach((item) => {
-      hideError(formData, item, formElement);
-      enableSubmit(formData);
-    });
+    
   }
   );
 };
@@ -92,14 +88,27 @@ document.querySelectorAll(".popup").forEach((item) => {
   }
 });
 
+const hideErrorAndEnableSubmit = (currentPopup, formElement, isEnableSubmit = false) => {
+  const input = currentPopup.querySelectorAll(formData.inputSelector) ;
+  input.forEach((item) => {
+    hideError(formData, item, formElement);
+    if (isEnableSubmit) {
+      enableSubmit(formData);
+    }
+  });
+}
+
 const renderProfilePopup = (currentPopup) => {
   openPopup(currentPopup);
   bindProfileOutput();
+  hideErrorAndEnableSubmit(currentPopup, profileFormElement, true);
 };
 
 const renderPlacePopup = (currentPopup, formData) => {
   openPopup(currentPopup);
   disableSubmit(formData);
+  hideErrorAndEnableSubmit(currentPopup, placeFormElement)
+  
 };
 
 const renderGalleryPopup = (currentPopup, evt) => {

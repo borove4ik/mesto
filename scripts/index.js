@@ -43,28 +43,14 @@ const bindClosePopupCardButton = (currentPopup) => {
 const closeByEsc = (evt) => {
   if (evt.key === "Escape") {
     const openedPopup = document.querySelector(".popup_opened");
-    const input = openedPopup.querySelectorAll(formData.inputSelector)
     closePopup(openedPopup);
-    input.forEach((item) => {
-      hideError(formData, item, openedPopup);
-      enableSubmit(formData);
-    });
-  }
-};
-
-const closePopupCardByEsc = (evt) => {
-  if (evt.key === "Escape") {
-    const openedPopup = document.querySelector(".popup_opened");
-    closePopupCard(openedPopup);
   }
 };
 
 const openPopup = (currentPopup) => {
   currentPopup.classList.add("popup_opened");
   currentPopup.focus();
-  currentPopup.id === "popup-open-card"
-    ? document.addEventListener("keydown", closePopupCardByEsc)
-    : document.addEventListener("keydown", closeByEsc);
+  document.addEventListener("keydown", closeByEsc);
 };
 
 document.querySelectorAll(".popup").forEach((item) => {
@@ -139,7 +125,7 @@ const closePopup = (currentPopup) => {
 
 const closePopupCard = (currentPopup) => {
   currentPopup.classList.remove("popup_opened");
-  document.removeEventListener("keydown", closePopupCardByEsc);
+  document.removeEventListener("keydown", closeByEsc);
 };
 
 const handleFormSubmit = (evt) => {

@@ -54,24 +54,11 @@ const openPopup = (currentPopup) => {
 };
 
 document.querySelectorAll(".popup").forEach((item) => {
-  if (item.id === "popup-open-card") {
     item.addEventListener("click", (evt) => {
       if (evt.target === item) {
         closePopupCard(item);
       }
     });
-  } else {
-    item.addEventListener("click", (evt) => {
-      if (evt.target === item) {
-        const inputList = item.querySelectorAll(formData.inputSelector);
-        closePopup(item);
-        inputList.forEach((input) => {
-          hideError(formData, input, item);
-          enableSubmit(formData);
-        });
-      }
-    });
-  }
 });
 
 const hideErrorAndEnableSubmit = (currentPopup, formElement, isEnableSubmit = false) => {

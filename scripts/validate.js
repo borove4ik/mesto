@@ -1,4 +1,4 @@
-const disableSubmit = () => {
+const disableSubmit = (formData) => {
   const submitButtons = document.querySelectorAll(
     formData.submitButtonSelector
   );
@@ -7,7 +7,7 @@ const disableSubmit = () => {
   });
 };
 
-const enableSubmit = () => {
+const enableSubmit = (formData) => {
   const submitButtons = document.querySelectorAll(
     formData.submitButtonSelector
   );
@@ -25,7 +25,6 @@ const showError = (formData, inputElement) => {
 
 const hideError = (formData, inputElement) => {
   const errorInput = document.querySelector(`#${inputElement.id}-error`);
-  console.log(errorInput)
   errorInput.classList.remove(formData.errorClass);
   errorInput.textContent = "";
   inputElement.classList.remove(formData.inputErrorClass);
@@ -37,11 +36,11 @@ const hasInvalidInput = (inputElementList) => {
   });
 };
 
-const toggleButtonState = (inputElementList) => {
+const toggleButtonState = (inputElementList, formData) => {
   if (!hasInvalidInput(inputElementList)) {
-    enableSubmit();
+    enableSubmit(formData);
   } else {
-    disableSubmit();
+    disableSubmit(formData);
   }
 };
 
@@ -58,7 +57,7 @@ const setEventListeners = (inputElement, formData) => {
   fieldList.forEach((currentInput) => {
     currentInput.addEventListener("input", () => {
       validateInput(formData, currentInput);
-      toggleButtonState(fieldList);
+      toggleButtonState(fieldList, formData);
     });
   });
 };

@@ -21,14 +21,14 @@ const renderGallery = (cards) => {
   });
 };
 
-const bindCloseButton = (currentPopup, formElement) => {
+const bindCloseButton = (currentPopup, formElement, formData) => {
   const closeButton = currentPopup.querySelector(".popup__close-button");
   closeButton.addEventListener("click", () => {
     closePopup(currentPopup, formElement);
     const input = currentPopup.querySelectorAll(formData.inputSelector) ;
     input.forEach((item) => {
       hideError(formData, item);
-      enableSubmit();
+      enableSubmit(formData);
     });
   }
   );
@@ -51,7 +51,7 @@ const closeByEsc = (evt) => {
     closePopup(openedPopup);
     input.forEach((item) => {
       hideError(formData, item);
-      enableSubmit();
+      enableSubmit(formData);
     });
   }
 };
@@ -82,12 +82,10 @@ document.querySelectorAll(".popup").forEach((item) => {
     item.addEventListener("click", (evt) => {
       if (evt.target === item) {
         const inputList = item.querySelectorAll(formData.inputSelector);
-        console.log(item);
-        console.log(inputList);
         closePopup(item);
         inputList.forEach((input) => {
           hideError(formData, input);
-          enableSubmit();
+          enableSubmit(formData);
         });
       }
     });
@@ -99,9 +97,9 @@ const renderProfilePopup = (currentPopup) => {
   bindProfileOutput();
 };
 
-const renderPlacePopup = (currentPopup) => {
+const renderPlacePopup = (currentPopup, formData) => {
   openPopup(currentPopup);
-  disableSubmit();
+  disableSubmit(formData);
 };
 
 const renderGalleryPopup = (currentPopup, evt) => {
@@ -170,13 +168,13 @@ const handleGalleryClick = (evt) => {
 };
 
 renderGallery(initialCards);
-bindCloseButton(profilePopup, profileFormElement);
-bindCloseButton(popupNewPlace, placeFormElement);
+bindCloseButton(profilePopup, profileFormElement, formData);
+bindCloseButton(popupNewPlace, placeFormElement, formData);
 bindClosePopupCardButton(popupCard);
 
 popupTrigger.addEventListener("click", () => renderProfilePopup(profilePopup));
 newPlacePopupTrigger.addEventListener("click", () =>
-  renderPlacePopup(popupNewPlace)
+  renderPlacePopup(popupNewPlace, formData)
 );
 profileFormElement.addEventListener("submit", handleFormSubmit);
 placeFormElement.addEventListener("submit", handleCardSubmit);

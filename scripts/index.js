@@ -99,8 +99,6 @@ const closePopup = (currentPopup) => {
   document.removeEventListener("keydown", closeByEsc);
 };
 
-
-
 const handleFormSubmit = (evt) => {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
@@ -115,7 +113,7 @@ const handleCardSubmit = (evt) => {
     link: linkInput.value,
   };
   gallery.prepend(createCard(card));
-  closePopup(popupNewPlace, placeFormElement);
+  closePopup(popupCard);
 };
 
 const handleGalleryClick = (evt) => {

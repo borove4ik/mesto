@@ -120,7 +120,7 @@ const handleCardSubmit = (evt) => {
     link: linkInput.value,
   };
   gallery.prepend(createCard(card));
-  closePopup(popupCard);
+  closePopup(popupNewPlace);
 };
 
 const handleGalleryClick = (evt) => {

@@ -16,15 +16,15 @@ const enableSubmit = (formData) => {
   });
 };
 
-const showError = (formData, inputElement) => {
-  const errorInput = document.querySelector(`#${inputElement.id}-error`);
+const showError = (formData, inputElement, currentForm) => {
+  const errorInput = currentForm.querySelector(`#${inputElement.id}-error`);
   errorInput.classList.add(formData.errorClass);
   errorInput.textContent = inputElement.validationMessage;
   inputElement.classList.add(formData.inputErrorClass);
 };
 
-const hideError = (formData, inputElement) => {
-  const errorInput = document.querySelector(`#${inputElement.id}-error`);
+const hideError = (formData, inputElement, currentForm) => {
+  const errorInput = currentForm.querySelector(`#${inputElement.id}-error`);
   errorInput.classList.remove(formData.errorClass);
   errorInput.textContent = "";
   inputElement.classList.remove(formData.inputErrorClass);
@@ -44,11 +44,11 @@ const toggleButtonState = (inputElementList, formData) => {
   }
 };
 
-const validateInput = (formData, inputElement) => {
+const validateInput = (formData, inputElement, currentForm) => {
   if (inputElement.validity.valid) {
-    hideError(formData, inputElement);
+    hideError(formData, inputElement, currentForm);
   } else {
-    showError(formData, inputElement);
+    showError(formData, inputElement, currentForm);
   }
 };
 
@@ -56,7 +56,7 @@ const setEventListeners = (inputElement, formData) => {
   const fieldList = inputElement.querySelectorAll(formData.inputSelector);
   fieldList.forEach((currentInput) => {
     currentInput.addEventListener("input", () => {
-      validateInput(formData, currentInput);
+      validateInput(formData, currentInput, inputElement);
       toggleButtonState(fieldList, formData);
     });
   });

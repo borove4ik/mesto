@@ -27,7 +27,7 @@ const bindCloseButton = (currentPopup, formElement, formData) => {
     closePopup(currentPopup, formElement);
     const input = currentPopup.querySelectorAll(formData.inputSelector) ;
     input.forEach((item) => {
-      hideError(formData, item);
+      hideError(formData, item, formElement);
       enableSubmit(formData);
     });
   }
@@ -50,7 +50,7 @@ const closeByEsc = (evt) => {
     const input = openedPopup.querySelectorAll(formData.inputSelector)
     closePopup(openedPopup);
     input.forEach((item) => {
-      hideError(formData, item);
+      hideError(formData, item, openedPopup);
       enableSubmit(formData);
     });
   }
@@ -84,7 +84,7 @@ document.querySelectorAll(".popup").forEach((item) => {
         const inputList = item.querySelectorAll(formData.inputSelector);
         closePopup(item);
         inputList.forEach((input) => {
-          hideError(formData, input);
+          hideError(formData, input, item);
           enableSubmit(formData);
         });
       }

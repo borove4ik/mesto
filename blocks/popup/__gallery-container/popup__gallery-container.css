@@ -3,7 +3,6 @@
   max-width: 75vw;
   margin: 0 auto;
   max-height: 75vh;
-  height: 100%;
 }
 
 @media (max-width: 320px) {

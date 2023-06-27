@@ -1,23 +1,39 @@
-const createCard = (cardContent) => {
-  const card = cardTemplate.querySelector(".gallery__element").cloneNode(true);
-  const likeButton = card.querySelector(".gallery__like");
-  const galleryPhoto = card.querySelector(".gallery__photo");
+import { Constants } from "./Constants.js";
+import {FormValidator} from "./FormValidator.js";
+import {Card} from "./Card.js";
 
-  card.querySelector(".gallery__element-description").textContent =
-    cardContent.name;
+const variables = new Constants();
 
-  galleryPhoto.src = cardContent.link;
-  galleryPhoto.alt = cardContent.name;
+const {
+  formData,
+  gallery,
+  initialCards,
+  jobInput,
+  jobName,
+  linkInput,
+  nameInput,
+  newPlacePopupTrigger,
+  placeFormElement,
+  placeInput,
+  popupCard,
+  popupPhoto,
+  popupText,
+  profileFormElement,
+  popupNewPlace,
+  popupTrigger,
+  profileName,
+  profilePopup
+} = variables;
 
-  likeButton.addEventListener("click", (evt) => {
-    evt.currentTarget.classList.toggle("gallery__like_active");
-  });
-  return card;
-};
+const formValidator = new FormValidator(formData);
+
+formValidator.enableValidation()
 
 const renderGallery = (cards) => {
   cards.forEach((currentCard) => {
-    gallery.append(createCard(currentCard));
+    const card = new Card(currentCard, '#gallery__element')
+    .createCard();
+    gallery.append(card);
   });
 };
 
@@ -59,7 +75,7 @@ const hideErrorAndEnableSubmit = (
   let submitButton;
 
   input.forEach((item) => {
-    hideError(formData, item, formElement);
+    formValidator.hideError(formData, item, formElement);
 
     if (!submitButton) {
       submitButton = item.parentNode.querySelector(".popup__button");
@@ -67,7 +83,7 @@ const hideErrorAndEnableSubmit = (
   });
 
   if (submitButton && isEnableSubmit) {
-    enableSubmit(submitButton);
+    formValidator.enableSubmit(submitButton);
   }
 };
 
@@ -77,7 +93,7 @@ const renderProfilePopup = (currentPopup) => {
   hideErrorAndEnableSubmit(currentPopup, profileFormElement, true);
 };
 
-const renderPlacePopup = (currentPopup, formData) => {
+const renderPlacePopup = (currentPopup) => {
   openPopup(currentPopup);
   hideErrorAndEnableSubmit(currentPopup, placeFormElement);
 };
@@ -121,7 +137,9 @@ const handleCardSubmit = (evt) => {
     name: placeInput.value,
     link: linkInput.value,
   };
-  gallery.prepend(createCard(card));
+
+  const addedCard = new Card(card, '#gallery__element').createCard();
+  gallery.prepend(addedCard)
   closePopup(popupNewPlace);
 };
 

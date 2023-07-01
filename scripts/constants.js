@@ -1,5 +1,5 @@
 export class Constants {
-  constructor(){
+  constructor() {
     this.profileFormElement = document.querySelector("#profile-edit");
     this.placeFormElement = document.querySelector("#place-edit");
     this.profilePopup = document.querySelector("#profile-popup");
@@ -16,8 +16,6 @@ export class Constants {
     this.newPlacePopupTrigger = document.querySelector(".profile__add-button");
     this.cardTemplate = document.querySelector("#gallery__element").content;
     this.gallery = document.querySelector(".gallery");
-    this.popupPhoto = this.popupCard.querySelector(".popup__gallery-photo");
-    this.popupText = this.popupCard.querySelector(".popup__gallery-description");
     this.initialCards = [
       {
         name: "Момент",

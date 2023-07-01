@@ -1,6 +1,6 @@
 import { Constants } from "./Constants.js";
-import {FormValidator} from "./FormValidator.js";
-import {Card} from "./Card.js";
+import { FormValidator } from "./FormValidator.js";
+import { Card } from "./Card.js";
 
 const variables = new Constants();
 
@@ -16,24 +16,21 @@ const {
   placeFormElement,
   placeInput,
   popupCard,
-  popupPhoto,
-  popupText,
   profileFormElement,
   popupNewPlace,
   popupTrigger,
   profileName,
-  profilePopup
+  profilePopup,
 } = variables;
 
-const formValidator = new FormValidator(formData);
-
-formValidator.enableValidation()
+const createCard = (currentCard) => {
+  const card = new Card(currentCard, "#gallery__element").createCard();
+  return card;
+};
 
 const renderGallery = (cards) => {
   cards.forEach((currentCard) => {
-    const card = new Card(currentCard, '#gallery__element')
-    .createCard();
-    gallery.append(card);
+    gallery.append(createCard(currentCard));
   });
 };
 
@@ -58,60 +55,26 @@ const openPopup = (currentPopup) => {
 };
 
 document.querySelectorAll(".popup").forEach((item) => {
-  item.addEventListener("click", (evt) => {
+  item.addEventListener("mousedown", (evt) => {
     if (evt.target === item) {
       closePopup(item);
     }
   });
 });
 
-const hideErrorAndEnableSubmit = (
-  currentPopup,
-  formElement,
-  isEnableSubmit = false
-) => {
-  const input = currentPopup.querySelectorAll(formData.inputSelector);
-
-  let submitButton;
-
-  input.forEach((item) => {
-    formValidator.hideError(formData, item, formElement);
-
-    if (!submitButton) {
-      submitButton = item.parentNode.querySelector(".popup__button");
-    }
-  });
-
-  if (submitButton && isEnableSubmit) {
-    formValidator.enableSubmit(submitButton);
-  }
+const createValidator = (currentPopup) => {
+  new FormValidator(formData, currentPopup).enableValidation();
 };
 
 const renderProfilePopup = (currentPopup) => {
   openPopup(currentPopup);
   bindProfileOutput();
-  hideErrorAndEnableSubmit(currentPopup, profileFormElement, true);
+  createValidator(currentPopup);
 };
 
 const renderPlacePopup = (currentPopup) => {
   openPopup(currentPopup);
-  hideErrorAndEnableSubmit(currentPopup, placeFormElement);
-};
-
-const renderGalleryPopup = (currentPopup, evt) => {
-  openPopup(currentPopup);
-  generatePhotoPopup(evt);
-};
-
-const generatePhotoPopup = (evt) => {
-  const imageSrc = evt.target.getAttribute("src");
-  const imageAlt = evt.target.getAttribute("alt");
-  const targetCard = evt.target.closest(".gallery__element");
-  const imageText = targetCard.querySelector(".gallery__element-description");
-
-  popupPhoto.setAttribute("src", imageSrc);
-  popupPhoto.setAttribute("alt", imageAlt);
-  popupText.textContent = imageText.textContent;
+  createValidator(currentPopup);
 };
 
 const bindProfileOutput = () => {
@@ -124,38 +87,22 @@ const closePopup = (currentPopup) => {
   document.removeEventListener("keydown", closeByEsc);
 };
 
-const handleFormSubmit = (evt) => {
+const handleProfileFormSubmit = (evt) => {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   jobName.textContent = jobInput.value;
   closePopup(profilePopup);
 };
 
-const handleCardSubmit = (evt) => {
+const handleCardFormSubmit = (evt) => {
   evt.preventDefault();
   const card = {
     name: placeInput.value,
     link: linkInput.value,
   };
 
-  const addedCard = new Card(card, '#gallery__element').createCard();
-  gallery.prepend(addedCard)
+  gallery.prepend(createCard(card));
   closePopup(popupNewPlace);
-};
-
-const handleGalleryClick = (evt) => {
-  if (evt.target.closest(".gallery__trash")) {
-    let parent = evt.target.closest(".gallery__trash");
-
-    if (!evt.target.classList.contains("gallery__trash")) {
-      parent = parent.closest(".gallery__element");
-    }
-
-    parent.remove();
-  }
-  if (evt.target.closest(".gallery__photo")) {
-    renderGalleryPopup(popupCard, evt);
-  }
 };
 
 renderGallery(initialCards);
@@ -167,6 +114,5 @@ popupTrigger.addEventListener("click", () => renderProfilePopup(profilePopup));
 newPlacePopupTrigger.addEventListener("click", () =>
   renderPlacePopup(popupNewPlace, formData)
 );
-profileFormElement.addEventListener("submit", handleFormSubmit);
-placeFormElement.addEventListener("submit", handleCardSubmit);
-gallery.addEventListener("click", handleGalleryClick);
+profileFormElement.addEventListener("submit", handleProfileFormSubmit);
+placeFormElement.addEventListener("submit", handleCardFormSubmit);

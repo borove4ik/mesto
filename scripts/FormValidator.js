@@ -1,5 +1,5 @@
 export class FormValidator {
-  constructor(formData, currentPopup) {
+  constructor(formData, currentForm) {
     this._formSelector = formData.formSelector;
     this._inputSelector = formData.inputSelector;
     this._submitButtonSelector = formData.submitButtonSelector;
@@ -7,10 +7,9 @@ export class FormValidator {
     this._inputErrorClass = formData.inputErrorClass;
     this._errorClass = formData.errorClass;
     this._formData = formData;
-    this._currentPopup = document.querySelector(`#${currentPopup.id}`);
-    this._popupForm = this._currentPopup.querySelector(this._formSelector);
-    this._inputList = this._popupForm.querySelectorAll(this._inputSelector);
-    this._submitButton = this._popupForm.querySelector(
+    this._currentForm = currentForm;
+    this._inputList =  this._currentForm.querySelectorAll(this._inputSelector);
+    this._submitButton =  this._currentForm.querySelector(
       this._submitButtonSelector
     );
   }
@@ -23,7 +22,7 @@ export class FormValidator {
   }
 
   _showError(inputElement) {
-    this._errorInput = this._popupForm.querySelector(
+    this._errorInput =  this._currentForm.querySelector(
       `#${inputElement.id}-error`
     );
     this._errorInput.classList.add(this._errorClass);
@@ -32,7 +31,7 @@ export class FormValidator {
   }
 
   hideError(inputElement) {
-    this._errorInput = this._popupForm.querySelector(
+    this._errorInput =  this._currentForm.querySelector(
       `#${inputElement.id}-error`
     );
     this._errorInput.classList.remove(this._formData.errorClass);
@@ -62,31 +61,29 @@ export class FormValidator {
     }
   }
 
+  _setInputEventListener(evt) {
+    this._validateInput(evt.currentTarget);
+    this._toggleButtonState();
+  }
+
   _setEventListeners() {
     this._inputList.forEach((currentInput) => {
-      currentInput.addEventListener("input", () => {
-        this._validateInput(currentInput);
-        this._toggleButtonState();
-      });
+      currentInput.addEventListener("input", this._setInputEventListener.bind(this));
     });
+  }
+  
+  resetForm() {
+    this._currentForm.reset();
   }
 
   resetValidation() {
-    if (this._popupForm.id === "place-edit") {
-      this._popupForm.reset();
-    }
     this._toggleButtonState();
     this._inputList.forEach((inputElement) => {
       this.hideError(inputElement);
-      inputElement.removeEventListener("input", () => {
-        this._validateInput(inputElement);
-        this._toggleButtonState();
-      });
     });
   }
 
   enableValidation() {
     this._setEventListeners();
-    this.resetValidation();
   }
 }

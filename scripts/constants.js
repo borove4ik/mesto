@@ -1,3 +1,4 @@
+import { FormValidator } from "./FormValidator.js";
 export class Constants {
   constructor() {
     this.profileFormElement = document.querySelector("#profile-edit");
@@ -50,5 +51,7 @@ export class Constants {
       inputErrorClass: "popup__input_type_error",
       errorClass: "popup__error_visible",
     };
+    this.profileFormValidator = new FormValidator(this.formData, this.profileFormElement);
+    this.placeFormValidator = new FormValidator(this.formData, this.placeFormElement);
   }
 }

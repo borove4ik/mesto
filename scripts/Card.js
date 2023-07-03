@@ -1,31 +1,25 @@
+import { openPopup } from "./index.js";
 export class Card {
   constructor(data, templateSelector) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
-  }
-
-  _handleOpenPopup(evt) {
     this._popupCard = document.querySelector("#popup-open-card");
     this._popupPhoto = this._popupCard.querySelector(".popup__gallery-photo");
     this._popupText = this._popupCard.querySelector(
       ".popup__gallery-description"
     );
-    this._popupPhoto.src = evt.target.src;
-    this._popupPhoto.alt = evt.target.src;
-    this._popupText.textContent = evt.target.alt;
-    this._popupCard.classList.add("popup_opened");
-    this._handleClosePopup = (evt) => {
-      if (evt.key === "Escape") {
-        this._popupCard.classList.remove("popup_opened");
-        document.removeEventListener("keydown", this._handleClosePopup);
-      }
-    };
-    document.addEventListener("keydown", this._handleClosePopup);
+  }
+
+  _handleOpenPopup(evt, popupPhoto, popupText, popupCard) {
+    popupPhoto.src = evt.target.src;
+    popupPhoto.alt = evt.target.src;
+    popupText.textContent = evt.target.alt;
+    openPopup(popupCard);
   }
 
   _handleDeleteCard() {
-    this._card = this.parentNode;
+    this._card = this.closest('.gallery__element');
     this._card.remove();
   }
 
@@ -33,7 +27,7 @@ export class Card {
     this._likeButton.addEventListener("click", (evt) => {
       evt.currentTarget.classList.toggle("gallery__like_active");
     });
-    this._galleryImage.addEventListener("click", this._handleOpenPopup);
+    this._galleryImage.addEventListener("click", (evt) => {this._handleOpenPopup(evt, this._popupPhoto, this._popupText, this._popupCard)});
     this._trashButton.addEventListener("click", this._handleDeleteCard);
   }
 
@@ -54,7 +48,7 @@ export class Card {
     this._galleryImage.alt = this._name;
     this._element.querySelector(".gallery__element-description").textContent =
       this._name;
-    this._setEventListeners(this._element);
+    this._setEventListeners();
     return this._element;
   }
 }

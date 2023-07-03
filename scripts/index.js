@@ -21,6 +21,8 @@ const {
   popupTrigger,
   profileName,
   profilePopup,
+  profileFormValidator,
+  placeFormValidator,
 } = variables;
 
 const createCard = (currentCard) => {
@@ -41,14 +43,14 @@ const bindCloseButton = (currentPopup) => {
   });
 };
 
-const closeByEsc = (evt) => {
+export const closeByEsc = (evt) => {
   if (evt.key === "Escape") {
     const openedPopup = document.querySelector(".popup_opened");
     closePopup(openedPopup);
   }
 };
 
-const openPopup = (currentPopup) => {
+export const openPopup = (currentPopup) => {
   currentPopup.classList.add("popup_opened");
   currentPopup.focus();
   document.addEventListener("keydown", closeByEsc);
@@ -62,19 +64,19 @@ document.querySelectorAll(".popup").forEach((item) => {
   });
 });
 
-const createValidator = (currentPopup) => {
-  new FormValidator(formData, currentPopup).enableValidation();
-};
+profileFormValidator.enableValidation()
+placeFormValidator.enableValidation()
 
 const renderProfilePopup = (currentPopup) => {
   openPopup(currentPopup);
   bindProfileOutput();
-  createValidator(currentPopup);
+  profileFormValidator.resetValidation();
 };
 
 const renderPlacePopup = (currentPopup) => {
   openPopup(currentPopup);
-  createValidator(currentPopup);
+  placeFormValidator.resetForm();
+  placeFormValidator.resetValidation();
 };
 
 const bindProfileOutput = () => {

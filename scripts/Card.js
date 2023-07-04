@@ -1,14 +1,14 @@
+const popupCard = document.querySelector("#popup-open-card");
+const popupPhoto = popupCard.querySelector(".popup__gallery-photo");
+const popupText = popupCard.querySelector(
+  ".popup__gallery-description"
+);
 import { openPopup } from "./index.js";
 export class Card {
   constructor(data, templateSelector) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
-    this._popupCard = document.querySelector("#popup-open-card");
-    this._popupPhoto = this._popupCard.querySelector(".popup__gallery-photo");
-    this._popupText = this._popupCard.querySelector(
-      ".popup__gallery-description"
-    );
   }
 
   _handleOpenPopup(evt, popupPhoto, popupText, popupCard) {
@@ -27,7 +27,7 @@ export class Card {
     this._likeButton.addEventListener("click", (evt) => {
       evt.currentTarget.classList.toggle("gallery__like_active");
     });
-    this._galleryImage.addEventListener("click", (evt) => {this._handleOpenPopup(evt, this._popupPhoto, this._popupText, this._popupCard)});
+    this._galleryImage.addEventListener("click", (evt) => {this._handleOpenPopup(evt, popupPhoto, popupText, popupCard)});
     this._trashButton.addEventListener("click", this._handleDeleteCard);
   }
 

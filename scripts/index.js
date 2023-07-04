@@ -18,12 +18,13 @@ const {
   popupCard,
   profileFormElement,
   popupNewPlace,
-  popupTrigger,
+  profilePopupTrigger,
   profileName,
   profilePopup,
-  profileFormValidator,
-  placeFormValidator,
 } = variables;
+
+const profileFormValidator = new FormValidator(formData, profileFormElement);
+const placeFormValidator = new FormValidator(formData, placeFormElement);
 
 const createCard = (currentCard) => {
   const card = new Card(currentCard, "#gallery__element").createCard();
@@ -112,7 +113,7 @@ bindCloseButton(profilePopup);
 bindCloseButton(popupNewPlace);
 bindCloseButton(popupCard);
 
-popupTrigger.addEventListener("click", () => renderProfilePopup(profilePopup));
+profilePopupTrigger.addEventListener("click", () => renderProfilePopup(profilePopup));
 newPlacePopupTrigger.addEventListener("click", () =>
   renderPlacePopup(popupNewPlace, formData)
 );

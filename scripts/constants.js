@@ -10,7 +10,7 @@ export class Constants {
     this.jobInput = document.querySelector("#input-bio");
     this.placeInput = document.querySelector("#input-place");
     this.linkInput = document.querySelector("#input-link");
-    this.popupTrigger = document.querySelector(".profile__edit-button");
+    this.profilePopupTrigger = document.querySelector(".profile__edit-button");
     this.popupCloseButtons = document.querySelectorAll(".popup__close-button");
     this.profileName = document.querySelector(".profile__name");
     this.jobName = document.querySelector(".profile__description");
@@ -51,7 +51,5 @@ export class Constants {
       inputErrorClass: "popup__input_type_error",
       errorClass: "popup__error_visible",
     };
-    this.profileFormValidator = new FormValidator(this.formData, this.profileFormElement);
-    this.placeFormValidator = new FormValidator(this.formData, this.placeFormElement);
   }
 }

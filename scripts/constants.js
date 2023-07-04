@@ -1,4 +1,3 @@
-import { FormValidator } from "./FormValidator.js";
 export class Constants {
   constructor() {
     this.profileFormElement = document.querySelector("#profile-edit");

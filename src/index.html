@@ -4,13 +4,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./pages/index.css" />
     <title>Место</title>
   </head>
   <body class="page">
     <header class="header">
       <img
-        src="./images/mestologo.svg"
+        src="<%-require('./images/mestologo.svg')%>"
         alt="Логотип компании Место Россия"
         class="header__logo"
       />
@@ -18,30 +17,30 @@
     <main class="content">
       <section class="profile">
         <img
-          src="./images/avatar.png"
+          src="<%-require('./images/avatar.jpg')%>"
           alt="фотография пользователя"
           class="profile__avatar"
         />
         <div class="profile__info">
           <div class="profile__name-wrapper">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <h1 class="profile__name">Кураж</h1>
             <button
               class="profile__edit-button"
               aria-label="редактировать"
               type="button"
             >
               <img
-                src="./images/edit-button-pen.png"
+                src="<%-require('./images/edit-button-pen.png')%>"
                 alt="карандаш для редактирования профиля"
                 class="profile__edit-icon"
               />
             </button>
           </div>
-          <p class="profile__description">Исследователь океана</p>
+          <p class="profile__description">Трусливый пёс</p>
         </div>
         <button class="profile__add-button" aria-label="Добавить" type="button">
           <img
-            src="./images/add-button-plus.png"
+            src="<%-require('./images/add-button-plus.png')%>"
             alt="плюс для добавления"
             class="profile__add-icon"
           />
@@ -67,7 +66,7 @@
             placeholder="Имя"
             class="popup__input"
             id="input-name"
-            name="name-edit"
+            name="inputName"
             minlength="2"
             maxlength="40"
             required
@@ -78,7 +77,7 @@
             placeholder="О себе"
             class="popup__input"
             id="input-bio"
-            name="bio-edit"
+            name="inputInfo"
             minlength="2"
             maxlength="200"
             required
@@ -94,7 +93,7 @@
         </form>
         <button class="popup__close-button" type="button">
           <img
-            src="./images/Close-Icon.svg"
+            src="<%-require('./images/Close-Icon.svg')%>"
             alt="закрывающий форму крестик"
             class="popup__close-icon"
           />
@@ -103,11 +102,7 @@
     </div>
     <template id="gallery__element">
       <div class="gallery__element">
-        <img
-          src="./images/denis-borovets-8O13UhJebNg-unsplash.jpg"
-          alt="небо с крышей"
-          class="gallery__photo"
-        />
+        <img src="" alt="небо с крышей" class="gallery__photo" />
         <div class="gallery__element-description-wrapper">
           <h2 class="gallery__element-description"></h2>
           <button
@@ -117,7 +112,7 @@
           ></button>
         </div>
         <button class="gallery__trash" aria-label="Удалить" type="button">
-          <img src="./images/Trash.svg" alt="Удалить" />
+          <img src="<%-require('./images/Trash.svg')%>" alt="Удалить" />
         </button>
       </div>
     </template>
@@ -136,7 +131,7 @@
             placeholder="Название"
             class="popup__input"
             id="input-place"
-            name="place-edit"
+            name="name"
             minlength="2"
             maxlength="30"
             required
@@ -147,7 +142,7 @@
             placeholder="Ссылка на картинку"
             class="popup__input"
             id="input-link"
-            name="link-edit"
+            name="link"
             required
           />
           <span class="popup__error" id="input-link-error"> </span>
@@ -162,7 +157,7 @@
         </form>
         <button class="popup__close-button" type="button">
           <img
-            src="./images/Close-Icon.svg"
+            src="<%-require('./images/Close-Icon.svg')%>"
             alt="закрывающий форму крестик"
             class="popup__close-icon"
           />
@@ -172,23 +167,23 @@
     <div class="popup popup_background_dark" id="popup-open-card">
       <div class="popup__gallery-container">
         <img
-          src="./images/denis-borovets-tng5oAFfJn4-unsplash.jpg"
+          src="<%-require('./images/denis-borovets-tng5oAFfJn4-unsplash.jpg')%>"
           alt="яркий забор"
           class="popup__gallery-photo"
         />
         <h2 class="popup__gallery-description"></h2>
-        <button class="popup__close-button" id="pop-close-photo-button" type="button">
+        <button
+          class="popup__close-button"
+          id="pop-close-photo-button"
+          type="button"
+        >
           <img
-            src="./images/Close-Icon.svg"
+            src="<%-require('./images/Close-Icon.svg')%>"
             alt="закрывающий форму крестик"
             class="popup__close-icon"
           />
         </button>
       </div>
     </div>
-    <script src="./scripts/Constants.js" type="module"></script>
-    <script src="./scripts/index.js" type="module"></script>
-    <script src="./scripts/Card.js" type="module"></script>
-    <script src="./scripts/FormValidator.js" type="module"></script>
   </body>
 </html>

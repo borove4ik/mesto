@@ -33,9 +33,9 @@ profileEditTrigger.addEventListener('click', () => {
   editProfileForm._setInputValues(userInfo.getUserInfo())
 })
 
-const formValidator = new FormValidator(formData);
+const profileFormValidator = new FormValidator(formData, editProfileForm._form);
 
-formValidator.enableValidation();
+profileFormValidator.enableValidation();
 
 const cardList = new Section(
   {
@@ -70,5 +70,9 @@ const placeEdit = new PopupWithForm('#popup-new-place', (evt) => {
 })
 
 placeEdit.setEventListeners()
+
+const placeFormValidator = new FormValidator(formData, placeEdit._form);
+
+placeFormValidator.enableValidation();
 
 newPlacePopupTrigger.addEventListener('click', placeEdit.open)

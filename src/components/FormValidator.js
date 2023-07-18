@@ -71,10 +71,6 @@ export class FormValidator {
       currentInput.addEventListener("input", this._setInputEventListener.bind(this));
     });
   }
-  
-  resetForm() {
-    this._currentForm.reset();
-  }
 
   resetValidation() {
     this._toggleButtonState();

@@ -12,9 +12,8 @@ const userInfo = new UserInfo({
   userInfo: ".profile__description",
 });
 
-const editProfileForm = new PopupWithForm('#profile-popup', (evt) => {
-  evt.preventDefault()
-  userInfo.setUserInfo(editProfileForm._getInputValues())
+const editProfileForm = new PopupWithForm('#profile-popup', (inputData) => {
+  userInfo.setUserInfo(inputData)
   editProfileForm.close()
 })
 editProfileForm.setEventListeners()
@@ -46,10 +45,7 @@ const cardList = new Section(
 
 cardList._renderItems();
 
-const placeEdit = new PopupWithForm('#popup-new-place', (evt) => {
-  evt.preventDefault()
-  
-  const cardData = placeEdit._getInputValues()
+const placeEdit = new PopupWithForm('#popup-new-place', (cardData) => {
   const card = new Card(cardData,'#gallery__element', () => {
     const photoPopup = new PopupWithImage("#popup-open-card");
     photoPopup.setEventListeners();

@@ -1,32 +1,41 @@
 import { Popup } from "./Popup.js";
 
 export class PopupWithForm extends Popup {
-  constructor(popup, handleFormSubmit) {
+  constructor(
+    popup,
+    handleFormSubmit,
+    hideErrorAndEnableSubmit,
+    isEnableSubmit = false
+  ) {
     super(popup);
+    this.form = this.popup.querySelector(".popup__form");
     this.handleFormSubmit = handleFormSubmit;
-    this._form = this.popup.querySelector(".popup__form");
-    this._inputList = this._form.querySelectorAll(".popup__input");
+    this.hideErrorAndEnableSubmit = hideErrorAndEnableSubmit;
+    this.isEnableSubmit = isEnableSubmit;
+    this.inputList = this.form.querySelectorAll(".popup__input");
     this.submit = this.popup.querySelector(".popup__button");
     this._inputValues = {};
   }
 
-  _setInputValues(fields) {
+  setInputValues(fields) {
     Object.keys(fields).forEach((key) => {
-      [...this._inputList].find((item) => item.name === key).value = fields[key];
+      [...this.inputList].find((item) => item.name === key).value = fields[key];
     });
   }
 
   _getInputValues(evt) {
-    evt.preventDefault()
-    this._inputList.forEach(item => {
+    evt.preventDefault();
+    this.inputList.forEach((item) => {
       this._inputValues[item.name] = item.value;
     });
-    return this._inputValues
+    return this._inputValues;
   }
 
   setEventListeners() {
     super.setEventListeners();
-    this.submit.addEventListener("click", (evt) => this.handleFormSubmit(this._getInputValues(evt)));
+    this.submit.addEventListener("click", (evt) =>
+      this.handleFormSubmit(this._getInputValues(evt))
+    );
   }
 
   open = () => {
@@ -35,6 +44,7 @@ export class PopupWithForm extends Popup {
 
   close() {
     super.close();
-    this._form.reset();
+    this.form.reset();
+    this.hideErrorAndEnableSubmit(this.form, this.submit, this.isEnableSubmit);
   }
 }

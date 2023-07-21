@@ -1,7 +1,7 @@
 export class Card {
   constructor(data, templateSelector, handleCardClick) {
-    this._name = data.name;
-    this._link = data.link;
+    this.imageName= data.name;
+    this.imageLink = data.link;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
   }
@@ -33,11 +33,11 @@ _handleLikeClick(evt) {
     this._element = this._getTemplate();
     this._likeButton = this._element.querySelector(".gallery__like");
     this._galleryTrash = this._element.querySelector(".gallery__trash");
-    this._element.querySelector(".gallery__photo").src = this._link;
-    this._element.querySelector(".gallery__photo").alt = this._name;
+    this._element.querySelector(".gallery__photo").src = this.imageLink;
+    this._element.querySelector(".gallery__photo").alt = this.imageName;
     this.photo = this._element.querySelector(".gallery__photo");
     this._element.querySelector(".gallery__element-description").textContent =
-      this._name;
+      this.imageName;
     this._setEventListeners();
     return this._element;
   }

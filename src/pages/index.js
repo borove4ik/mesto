@@ -1,11 +1,11 @@
-import { FormValidator } from "./components/FormValidator.js";
-import { Card } from "./components/Card.js";
-import { Section } from "./components/Section.js";
-import { PopupWithImage } from "./components/PopupWithImage.js";
-import "./pages/index.css";
-import { PopupWithForm } from "./components/PopupWithForm.js";
-import { UserInfo } from "./components/UserInfo.js";
-import { initialCards, formData } from "./components/constants.js";
+import { FormValidator } from "../components/FormValidator.js";
+import { Card } from "../components/Card.js";
+import { Section } from "../components/Section.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
+import "./index.css";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { UserInfo } from "../components/UserInfo.js";
+import { initialCards, formData } from "../components/constants.js";
 
 const userInfo = new UserInfo({
   userName: ".profile__name",
@@ -68,7 +68,8 @@ const photoPopup = new PopupWithImage("#popup-open-card");
 const addCard = (cardData) => {
   const card = new Card(cardData, "#gallery__element", () => {
     photoPopup.setEventListeners();
-    photoPopup.open(cardData);
+    photoPopup.open({link: card.imageLink, name: card.imageName});
+    console.log(cardData)
   });
   const cardElement = card.createCard();
   cardList.addItem(cardElement);
@@ -79,6 +80,7 @@ const cardList = new Section(
     items: initialCards,
     renderer: (cardData) => {
       addCard(cardData);
+      console.log(cardData)
     },
   },
   ".gallery"

@@ -12,23 +12,14 @@ const userInfo = new UserInfo({
   userInfo: ".profile__description",
 });
 
-const formValidator = new FormValidator(formData);
+const profileFormElement = document.querySelector("#profile-edit");
+const placeFormElement = document.querySelector("#place-edit");
 
-const hideErrorAndEnableSubmit = (
-  formElement,
-  submitButton,
-  isEnableSubmit
-) => {
-  const input = formElement.querySelectorAll(formData.inputSelector);
+const profileFormValidator = new FormValidator(formData, profileFormElement);
+const placeFormValidator = new FormValidator(formData, placeFormElement, true);
 
-  input.forEach((item) => {
-    formValidator.hideError(formData, item, formElement);
-  });
-  if (submitButton && isEnableSubmit) {
-    formValidator.disableSubmit(submitButton)
-  } else {
-    formValidator.enableSubmit(submitButton)
-  }
+const hideErrorAndEnableSubmit = (validatorInstance) => {
+  validatorInstance.handleClosedFormValidation();
 };
 
 const editProfileForm = new PopupWithForm(
@@ -37,7 +28,8 @@ const editProfileForm = new PopupWithForm(
     userInfo.setUserInfo(inputData);
     editProfileForm.close();
   },
-  hideErrorAndEnableSubmit
+  hideErrorAndEnableSubmit,
+  profileFormValidator
 );
 
 editProfileForm.setEventListeners();
@@ -55,24 +47,36 @@ const placeEdit = new PopupWithForm(
     addCard(cardData);
     placeEdit.close();
   },
-  hideErrorAndEnableSubmit, true
+  hideErrorAndEnableSubmit,
+  placeFormValidator,
+  true
 );
 
 placeEdit.setEventListeners();
-formValidator.enableValidation();
+profileFormValidator.enableValidation();
+placeFormValidator.enableValidation();
 
 const newPlacePopupTrigger = document.querySelector(".profile__add-button");
 newPlacePopupTrigger.addEventListener("click", placeEdit.open);
 
 const photoPopup = new PopupWithImage("#popup-open-card");
+
+const handleCardClick = (cardData) => {
+  photoPopup.open(cardData);
+};
+
+const createCard = (cardData) => {
+  const card = new Card(
+    cardData,
+    "#gallery__element",
+    handleCardClick
+  ).createCard();
+  photoPopup.setEventListeners();
+  return card;
+};
+
 const addCard = (cardData) => {
-  const card = new Card(cardData, "#gallery__element", () => {
-    photoPopup.setEventListeners();
-    photoPopup.open({link: card.imageLink, name: card.imageName});
-    console.log(cardData)
-  });
-  const cardElement = card.createCard();
-  cardList.addItem(cardElement);
+  cardList.addItem(createCard(cardData));
 };
 
 const cardList = new Section(
@@ -80,7 +84,6 @@ const cardList = new Section(
     items: initialCards,
     renderer: (cardData) => {
       addCard(cardData);
-      console.log(cardData)
     },
   },
   ".gallery"

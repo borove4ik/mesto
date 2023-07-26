@@ -5,16 +5,16 @@ export class PopupWithForm extends Popup {
     popup,
     handleFormSubmit,
     hideErrorAndEnableSubmit,
-    isEnableSubmit = false
+    validatorInstance
   ) {
     super(popup);
     this.form = this.popup.querySelector(".popup__form");
     this.handleFormSubmit = handleFormSubmit;
     this.hideErrorAndEnableSubmit = hideErrorAndEnableSubmit;
-    this.isEnableSubmit = isEnableSubmit;
     this.inputList = this.form.querySelectorAll(".popup__input");
     this.submit = this.popup.querySelector(".popup__button");
     this._inputValues = {};
+    this.validatorInstance =validatorInstance;
   }
 
   setInputValues(fields) {
@@ -45,6 +45,6 @@ export class PopupWithForm extends Popup {
   close() {
     super.close();
     this.form.reset();
-    this.hideErrorAndEnableSubmit(this.form, this.submit, this.isEnableSubmit);
+    this.hideErrorAndEnableSubmit(this.validatorInstance);
   }
 }

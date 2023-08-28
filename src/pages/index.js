@@ -5,12 +5,72 @@ import { PopupWithImage } from "../components/PopupWithImage.js";
 import "./index.css";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js";
-import { initialCards, formData } from "../components/constants.js";
+import { formData } from "../components/constants.js";
+import { PopupDeleteConfirm } from "../components/PopupDeleteConfirm.js"
+import { Api } from "../components/Api.js";
+
+export const api = new Api('fck')
+
+const pageData = Promise.all([api.getInfo(), api.getCards()])
+
+const photoPopup = new PopupWithImage("#popup-open-card");
+
+const handleCardClick = (cardData) => {
+  photoPopup.open(cardData);
+};
+
+const confirmPopup = new PopupDeleteConfirm('popup__delete')
+
+confirmPopup.setEventListeners()
+
+const getCardLayout = (cardData, userId) => {
+  const card = new Card(
+    cardData,
+    "#gallery__element",
+    handleCardClick, (cardId, cardElement) => {
+      confirmPopup.open(cardId, cardElement)
+    }
+  ).createCard(userId);
+  photoPopup.setEventListeners();
+  return card;
+};
+
+const handleLikePost = (instance) => {
+  api.changeLike
+  console.log(instance)
+}
+
+const feed = pageData
+.then(([userData, initialCards]) => {
+  const cardList = new Section(
+    {
+      items: initialCards,
+      renderer: (cardData) => {
+        cardList.addItem(getCardLayout(cardData, userData._id));
+      },
+    },
+    ".gallery"
+  );
+  
+  cardList._renderItems();
+  return cardList
+})
 
 const userInfo = new UserInfo({
   userName: ".profile__name",
   userInfo: ".profile__description",
+  userAvatar: ".profile__avatar"
 });
+
+pageData
+.then(([userData]) => {
+  userInfo.getUserInfo({
+    inputName: userData.name,
+    inputInfo: userData.about,
+    userAvatar: userData.avatar
+  })
+})
+.catch((err) => console.log(err))
 
 const profileFormElement = document.querySelector("#profile-edit");
 const placeFormElement = document.querySelector("#place-edit");
@@ -25,7 +85,8 @@ const hideErrorAndEnableSubmit = (validatorInstance) => {
 const editProfileForm = new PopupWithForm(
   "#profile-popup",
   (inputData) => {
-    userInfo.setUserInfo(inputData);
+    api.setInfo(inputData);
+    userInfo.getUserInfo(inputData);
     editProfileForm.close();
   },
   hideErrorAndEnableSubmit,
@@ -38,14 +99,23 @@ const profileEditTrigger = document.querySelector(".profile__edit-button");
 
 profileEditTrigger.addEventListener("click", () => {
   editProfileForm.open();
-  editProfileForm.setInputValues(userInfo.getUserInfo());
+  editProfileForm.setInputValues(userInfo.setUserInfo());
 });
 
 const placeEdit = new PopupWithForm(
   "#popup-new-place",
-  (cardData) => {
-    addCard(cardData);
-    placeEdit.close();
+  (formData) => {
+    pageData.then(() => {
+      api.setCard(formData)
+      .then( (cardData) => {
+        feed.then((data) => {
+          data.addItem(getCardLayout(cardData, api.getInfoResponse._id))
+          placeEdit.close();
+          
+        })
+      }) 
+    })
+    
   },
   hideErrorAndEnableSubmit,
   placeFormValidator,
@@ -58,35 +128,3 @@ placeFormValidator.enableValidation();
 
 const newPlacePopupTrigger = document.querySelector(".profile__add-button");
 newPlacePopupTrigger.addEventListener("click", placeEdit.open);
-
-const photoPopup = new PopupWithImage("#popup-open-card");
-
-const handleCardClick = (cardData) => {
-  photoPopup.open(cardData);
-};
-
-const createCard = (cardData) => {
-  const card = new Card(
-    cardData,
-    "#gallery__element",
-    handleCardClick
-  ).createCard();
-  photoPopup.setEventListeners();
-  return card;
-};
-
-const addCard = (cardData) => {
-  cardList.addItem(createCard(cardData));
-};
-
-const cardList = new Section(
-  {
-    items: initialCards,
-    renderer: (cardData) => {
-      addCard(cardData);
-    },
-  },
-  ".gallery"
-);
-
-cardList._renderItems();

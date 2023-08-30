@@ -8,11 +8,13 @@ export class PopupWithForm extends Popup {
     validatorInstance
   ) {
     super(popup);
+    
     this.form = this.popup.querySelector(".popup__form");
     this.handleFormSubmit = handleFormSubmit;
     this.hideErrorAndEnableSubmit = hideErrorAndEnableSubmit;
     this.inputList = this.form.querySelectorAll(".popup__input");
     this.submit = this.popup.querySelector(".popup__button");
+    this.buttonTextContent = this.submit.value;
     this._inputValues = {};
     this.validatorInstance =validatorInstance;
   }
@@ -23,8 +25,17 @@ export class PopupWithForm extends Popup {
     });
   }
 
+  deployRequestStatus() {
+    this.submit.value = 'Сохранение...'
+  }
+
+resetDeployRequestStatus() {
+  this.submit.value = this.buttonTextContent;
+}
+
   _getInputValues(evt) {
     evt.preventDefault();
+    this.deployRequestStatus()
     this.inputList.forEach((item) => {
       this._inputValues[item.name] = item.value;
     });
@@ -44,6 +55,7 @@ export class PopupWithForm extends Popup {
 
   close() {
     super.close();
+    this.resetDeployRequestStatus();
     this.form.reset();
     this.hideErrorAndEnableSubmit(this.validatorInstance);
   }

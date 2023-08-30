@@ -11,7 +11,6 @@ export class Api {
     getInfo() {
       return fetch('https://nomoreparties.co/v1/cohort-73/users/me', {
         method: "GET",
-
             headers: {'authorization': '25e7eed6-78e7-4fdc-b7c0-c962e01ad60d'}
           })
           .then(this.#onResponse)
@@ -80,6 +79,22 @@ export class Api {
           authorization: '25e7eed6-78e7-4fdc-b7c0-c962e01ad60d',
           'Content-Type': 'application/json'
         }
+    })
+    .then((res) => {
+      return this.#onResponse(res)
+    })
+  }
+
+  updateAvatar({link}) {
+    return fetch('https://mesto.nomoreparties.co/v1/cohort-73/users/me/avatar', {
+      method: 'PATCH',
+      headers: {
+        authorization: '25e7eed6-78e7-4fdc-b7c0-c962e01ad60d',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        avatar: link
+      })
     })
     .then((res) => {
       return this.#onResponse(res)

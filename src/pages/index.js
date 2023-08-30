@@ -23,22 +23,27 @@ const confirmPopup = new PopupDeleteConfirm('popup__delete')
 
 confirmPopup.setEventListeners()
 
+const handleLikePost = (instance) => {
+  api.changeLike(instance._id, instance.isLiked())
+  .then(dataCardFromServer => {
+    instance.setLikesData(dataCardFromServer)
+  })
+}
+
 const getCardLayout = (cardData, userId) => {
   const card = new Card(
     cardData,
     "#gallery__element",
     handleCardClick, (cardId, cardElement) => {
       confirmPopup.open(cardId, cardElement)
-    }
-  ).createCard(userId);
+    }, handleLikePost,
+    userId
+  ).createCard();
   photoPopup.setEventListeners();
+
   return card;
 };
 
-const handleLikePost = (instance) => {
-  api.changeLike
-  console.log(instance)
-}
 
 const feed = pageData
 .then(([userData, initialCards]) => {
@@ -74,7 +79,9 @@ pageData
 
 const profileFormElement = document.querySelector("#profile-edit");
 const placeFormElement = document.querySelector("#place-edit");
+const avatarFormElement = document.querySelector("#avatar-edit")
 
+const avatarFormValidator = new FormValidator(formData, avatarFormElement, true);
 const profileFormValidator = new FormValidator(formData, profileFormElement);
 const placeFormValidator = new FormValidator(formData, placeFormElement, true);
 
@@ -122,9 +129,34 @@ const placeEdit = new PopupWithForm(
   true
 );
 
+const avatarUpdate = new PopupWithForm(
+  "#popup-avatar",
+  (inputData) => {
+   pageData.then(() => {
+    api.updateAvatar(inputData)
+    .then((userData) => {
+      userInfo.getUserInfo({
+        inputName: userData.name, 
+        inputInfo: userData.about, 
+        userAvatar: userData.avatar})
+      avatarUpdate.close();
+    })
+   })
+  },
+  hideErrorAndEnableSubmit,
+  avatarFormValidator,
+  true
+)
+
 placeEdit.setEventListeners();
 profileFormValidator.enableValidation();
 placeFormValidator.enableValidation();
+avatarFormValidator.enableValidation();
 
 const newPlacePopupTrigger = document.querySelector(".profile__add-button");
 newPlacePopupTrigger.addEventListener("click", placeEdit.open);
+
+const avatarEditTrigger = document.querySelector('.profile__avatar-edit');
+avatarEditTrigger.addEventListener('click', avatarUpdate.open)
+
+avatarUpdate.setEventListeners()

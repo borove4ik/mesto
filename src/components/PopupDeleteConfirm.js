@@ -3,7 +3,7 @@ import { api } from "../pages/index.js";
 
 export class PopupDeleteConfirm extends Popup{
     constructor(popup) {
-        super(`.${popup}`);
+        super(popup);
         this.cardId = ''
         this.card =''
         this.deleteButton = this.popup.querySelector('.popup__button')

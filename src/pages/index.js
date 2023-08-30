@@ -19,7 +19,7 @@ const handleCardClick = (cardData) => {
   photoPopup.open(cardData);
 };
 
-const confirmPopup = new PopupDeleteConfirm('popup__delete')
+const confirmPopup = new PopupDeleteConfirm('#delete-confirm')
 
 confirmPopup.setEventListeners()
 

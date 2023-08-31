@@ -11,7 +11,8 @@ export class Card {
     this._id = this.data._id;
     this.handleDeleteCLick = handleDeleteCLick;
     this._handleLikePost = handleLikePost
-    this.userId = userId
+    this.userId = userId;
+    
   }
 
   deleteClick = () => {
@@ -27,8 +28,7 @@ isLiked(){
 }
 
   getLikeInfo() {
-   const cardLikeCounter = this._element.querySelector('.gallery__like-counter');
-   cardLikeCounter.textContent = this.data.likes.length;
+   this.cardLikeCounter.textContent = this.data.likes.length;
 
     if(this.isLiked()){
         this._likeButton.classList.add("gallery__like_active");
@@ -43,6 +43,9 @@ isLiked(){
     this.photo.addEventListener("click", () => {
       this._handleCardClick({ name: this._imageName, link: this._imageLink });
     });
+    this._likeButton.addEventListener('click', () => {
+      this._handleLikePost(this)
+    })
   }
 
   _getTemplate() {
@@ -61,10 +64,11 @@ setLikesData(data) {
   createCard() {
     this._element = this._getTemplate();
     this._likeButton = this._element.querySelector(".gallery__like");
+    this.cardLikeCounter = this._element.querySelector('.gallery__like-counter');
     this._galleryTrash = this._element.querySelector(".gallery__trash");
-    this._element.querySelector(".gallery__photo").src = this._imageLink;
-    this._element.querySelector(".gallery__photo").alt = this._imageName;
     this.photo = this._element.querySelector(".gallery__photo");
+    this.photo.src = this._imageLink;
+    this.photo.alt = this._imageName;
     this._element.querySelector(".gallery__element-description").textContent =
       this._imageName;
     if (this.userId !== this.ownerId) {
@@ -73,9 +77,7 @@ setLikesData(data) {
     this.getLikeInfo()
     this._setEventListeners();
 
-    this._likeButton.addEventListener('click', () => {
-      this._handleLikePost(this)
-    })
+    
     return this._element;
   }
 

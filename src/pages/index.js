@@ -75,7 +75,7 @@ const userInfo = new UserInfo({
 
 pageData
 .then(([userData]) => {
-  userInfo.getUserInfo({
+  userInfo.setUserInfo({
     inputName: userData.name,
     inputInfo: userData.about,
     userAvatar: userData.avatar
@@ -101,7 +101,7 @@ const editProfileForm = new PopupWithForm(
     api.receiveButtonTextChanger(editProfileForm.resetDeployRequestStatus)
     api.receiveCloseFormMethod(editProfileForm.close)
     api.setInfo(inputData);
-    userInfo.getUserInfo(inputData);
+    userInfo.setUserInfo(inputData);
     
   },
   hideErrorAndEnableSubmit,
@@ -114,7 +114,7 @@ const profileEditTrigger = document.querySelector(".profile__edit-button");
 
 profileEditTrigger.addEventListener("click", () => {
   editProfileForm.open();
-  editProfileForm.setInputValues(userInfo.setUserInfo());
+  editProfileForm.setInputValues(userInfo.getUserInfo());
 });
 
 const placeEdit = new PopupWithForm(
@@ -146,7 +146,7 @@ const avatarUpdate = new PopupWithForm(
     api.receiveButtonTextChanger(avatarUpdate.resetDeployRequestStatus)
     api.updateAvatar(inputData)
     .then((userData) => {
-      userInfo.getUserInfo({
+      userInfo.setUserInfo({
         inputName: userData.name, 
         inputInfo: userData.about, 
         userAvatar: userData.avatar})

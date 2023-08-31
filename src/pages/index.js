@@ -5,7 +5,7 @@ import { PopupWithImage } from "../components/PopupWithImage.js";
 import "./index.css";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js";
-import { formData } from "../components/constants.js";
+import { formData } from "../utils/constants.js";
 import { PopupDeleteConfirm } from "../components/PopupDeleteConfirm.js"
 import { Api } from '../components/Api.js' 
 

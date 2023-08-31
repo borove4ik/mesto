@@ -92,6 +92,7 @@ const hideErrorAndEnableSubmit = (validatorInstance) => {
 const editProfileForm = new PopupWithForm(
   "#profile-popup",
   (inputData) => {
+    api.receiveButtonTextChanger(editProfileForm.resetDeployRequestStatus)
     api.setInfo(inputData);
     userInfo.getUserInfo(inputData);
     editProfileForm.close();
@@ -113,6 +114,7 @@ const placeEdit = new PopupWithForm(
   "#popup-new-place",
   (formData) => {
     pageData.then(() => {
+      api.receiveButtonTextChanger(placeEdit.resetDeployRequestStatus)
       api.setCard(formData)
       .then( (cardData) => {
         feed.then((data) => {
@@ -133,6 +135,7 @@ const avatarUpdate = new PopupWithForm(
   "#popup-avatar",
   (inputData) => {
    pageData.then(() => {
+    api.receiveButtonTextChanger(avatarUpdate.resetDeployRequestStatus)
     api.updateAvatar(inputData)
     .then((userData) => {
       userInfo.getUserInfo({

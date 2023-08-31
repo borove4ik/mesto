@@ -95,11 +95,12 @@
           />
           <span class="popup__error" id="input-bio-error"></span>
           <input
+            class="popup__button"
             type="submit"
             value="Сохранить"
             aria-label="Сохрани"
             name="profile-save"
-            class="popup__button"
+            
           />
         </form>
         <button class="popup__close-button" type="button">
@@ -172,6 +173,7 @@
             class="popup__button"
             disabled
           />
+          
         </form>
         <button class="popup__close-button" type="button">
           <img
@@ -245,14 +247,13 @@
         required
       />
       <span class="popup__error" id="avatar-input-link-error"> </span>
-        <button
+        <input
       aria-label="Сохранить"
+      value="Сохранить"
       name="update-avatar"
       class="popup__button"
       type="submit"
-      >
-      Сохранить
-      </button>
+      />
         <button
           class="popup__close-button"
           id="popup-close-avatar-button"

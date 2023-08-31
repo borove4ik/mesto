@@ -27,15 +27,15 @@ export class PopupWithForm extends Popup {
 
   deployRequestStatus() {
     this.submit.value = 'Сохранение...'
+    console.log('меняю текст кнопки')
   }
 
-resetDeployRequestStatus() {
+resetDeployRequestStatus = () => {
+  console.log('меняю текст кнопки на исходный')
   this.submit.value = this.buttonTextContent;
 }
 
-  _getInputValues(evt) {
-    evt.preventDefault();
-    this.deployRequestStatus()
+  _getInputValues() {
     this.inputList.forEach((item) => {
       this._inputValues[item.name] = item.value;
     });
@@ -44,8 +44,11 @@ resetDeployRequestStatus() {
 
   setEventListeners() {
     super.setEventListeners();
-    this.submit.addEventListener("click", (evt) =>
+    this.submit.addEventListener("click", (evt) =>{
+      evt.preventDefault();
+      this.deployRequestStatus()
       this.handleFormSubmit(this._getInputValues(evt))
+    }
     );
   }
 
@@ -55,7 +58,7 @@ resetDeployRequestStatus() {
 
   close() {
     super.close();
-    this.resetDeployRequestStatus();
+   //this.resetDeployRequestStatus();
     this.form.reset();
     this.hideErrorAndEnableSubmit(this.validatorInstance);
   }

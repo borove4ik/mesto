@@ -1,9 +1,15 @@
 export class Api {
     constructor(options) {
         this.options = options;
-        this.getInfoResponse = null
-        this.getCardsResponse = null
+        this.getInfoResponse = null;
+        this.getCardsResponse = null;
+        this.buttonTextChanger = ''
     }
+
+    receiveButtonTextChanger(buttonTextChanger) {
+      this.buttonTextChanger = buttonTextChanger
+    }
+
     #onResponse(res) {
         return res.ok ? res.json() : console.log(res.status) 
     }
@@ -18,6 +24,9 @@ export class Api {
             this.getInfoResponse = res
           return res
           })
+          .catch((res) => {
+            console.log(res.status)
+          })
     }
 
     getCards() {
@@ -29,6 +38,9 @@ export class Api {
             .then((res) => {
               this.getCardsResponse = res
               return res
+            })
+            .catch((res) => {
+              console.log(res.status)
             })
       }
 
@@ -43,7 +55,13 @@ export class Api {
           name: inputName,
           about: inputInfo
         })
-      });
+       
+      })
+      .then(this.#onResponse)
+      .catch((res) => {
+        console.log(res.status)
+      })
+      .finally(this.buttonTextChanger());
     } 
 
     setCard({name, link}) {
@@ -59,6 +77,10 @@ export class Api {
         })
       })
       .then(this.#onResponse)
+      .catch((res) => {
+        console.log(res.status)
+      })
+      .finally(this.buttonTextChanger())
     }
 
     deleteCard({_id}) {
@@ -70,6 +92,9 @@ export class Api {
         },
       })
       .then(this.#onResponse)
+      .catch((res) => {
+        console.log(res.status)
+      })
     }
 
     changeLike(cardId, isLiked) {
@@ -82,6 +107,9 @@ export class Api {
     })
     .then((res) => {
       return this.#onResponse(res)
+    })
+    .catch((res) => {
+      console.log(res.status)
     })
   }
 
@@ -99,5 +127,9 @@ export class Api {
     .then((res) => {
       return this.#onResponse(res)
     })
+    .catch((res) => {
+      console.log(res.status)
+    })
+    .finally(this.buttonTextChanger())
   }
 }

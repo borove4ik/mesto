@@ -14,7 +14,8 @@ export class PopupWithForm extends Popup {
     this.hideErrorAndEnableSubmit = hideErrorAndEnableSubmit;
     this.inputList = this.form.querySelectorAll(".popup__input");
     this.submit = this.popup.querySelector(".popup__button");
-    this.buttonTextContent = this.submit.value;
+    this.buttonTextContent = this.submit.textContent;
+    console.log(this.buttonTextContent)
     this._inputValues = {};
     this.validatorInstance =validatorInstance;
   }
@@ -26,13 +27,13 @@ export class PopupWithForm extends Popup {
   }
 
   deployRequestStatus() {
-    this.submit.value = 'Сохранение...'
+    this.submit.textContent = 'Сохранение...'
     console.log('меняю текст кнопки')
   }
 
 resetDeployRequestStatus = () => {
   console.log('меняю текст кнопки на исходный')
-  this.submit.value = this.buttonTextContent;
+  this.submit.textContent = this.buttonTextContent;
 }
 
   _getInputValues() {
@@ -56,9 +57,8 @@ resetDeployRequestStatus = () => {
     super.open.call(this);
   };
 
-  close() {
+  close = () => {
     super.close();
-   //this.resetDeployRequestStatus();
     this.form.reset();
     this.hideErrorAndEnableSubmit(this.validatorInstance);
   }

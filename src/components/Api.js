@@ -5,10 +5,17 @@
         this.getInfoResponse = null;
         this.getCardsResponse = null;
         this.buttonTextChanger = '';
+        this.closeForm = ''
     }
 
     receiveButtonTextChanger(buttonTextChanger) {
       this.buttonTextChanger = buttonTextChanger
+    }
+
+    receiveCloseFormMethod(closeForm) {
+      
+      this.closeForm = closeForm;
+      console.log(this.closeForm)
     }
 
     #onResponse(res) {
@@ -55,11 +62,16 @@
         })
        
       })
-      .then(this.#onResponse)
+      .then((res) => {
+        this.#onResponse(res)
+      })
       .catch((res) => {
         console.log(res.status)
       })
-      .finally(this.buttonTextChanger());
+      .finally(() => {
+        this.buttonTextChanger()
+        this.closeForm()
+      })
     } 
 
     setCard({name, link}) {
@@ -75,15 +87,21 @@
       .catch((res) => {
         console.log(res.status)
       })
-      .finally(this.buttonTextChanger())
+      .finally(() => {
+        this.buttonTextChanger()
+        this.closeForm()
+      })
     }
 
-    deleteCard({_id}) {
+    deleteCard({_id, card}) {
       return fetch(`${this._url}/cards/${_id}`, {
         method: 'DELETE', 
         headers: this._headers,
       })
-      .then(this.#onResponse)
+      .then(() => {
+        card.remove()
+      this.closeForm()
+      })
       .catch((res) => {
         console.log(res.status)
       })
@@ -113,9 +131,13 @@
     .then((res) => {
       return this.#onResponse(res)
     })
+    .then()
     .catch((res) => {
       console.log(res.status)
     })
-    .finally(this.buttonTextChanger())
+    .finally(() => {
+      this.buttonTextChanger()
+      this.closeForm()
+    })
   }
 }

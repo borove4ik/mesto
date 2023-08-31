@@ -99,9 +99,10 @@ const editProfileForm = new PopupWithForm(
   "#profile-popup",
   (inputData) => {
     api.receiveButtonTextChanger(editProfileForm.resetDeployRequestStatus)
+    api.receiveCloseFormMethod(editProfileForm.close)
     api.setInfo(inputData);
     userInfo.getUserInfo(inputData);
-    editProfileForm.close();
+    
   },
   hideErrorAndEnableSubmit,
   profileFormValidator
@@ -121,12 +122,12 @@ const placeEdit = new PopupWithForm(
   (formData) => {
     pageData.then(() => {
       api.receiveButtonTextChanger(placeEdit.resetDeployRequestStatus)
+      api.receiveCloseFormMethod(placeEdit.close)
       api.setCard(formData)
       .then( (cardData) => {
         feed.then((data) => {
           data.addItem(getCardLayout(cardData, api.getInfoResponse._id))
-          placeEdit.close();
-          
+          api.closeForm()
         })
       }) 
     })
@@ -141,6 +142,7 @@ const avatarUpdate = new PopupWithForm(
   "#popup-avatar",
   (inputData) => {
    pageData.then(() => {
+    api.receiveCloseFormMethod(avatarUpdate.close)
     api.receiveButtonTextChanger(avatarUpdate.resetDeployRequestStatus)
     api.updateAvatar(inputData)
     .then((userData) => {
@@ -148,7 +150,6 @@ const avatarUpdate = new PopupWithForm(
         inputName: userData.name, 
         inputInfo: userData.about, 
         userAvatar: userData.avatar})
-      avatarUpdate.close();
     })
    })
   },

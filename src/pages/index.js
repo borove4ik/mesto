@@ -7,9 +7,15 @@ import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { formData } from "../components/constants.js";
 import { PopupDeleteConfirm } from "../components/PopupDeleteConfirm.js"
-import { Api } from "../components/Api.js";
+import { Api } from '../components/Api.js' 
 
-export const api = new Api('fck')
+export const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-73',
+  headers: {
+    authorization: '25e7eed6-78e7-4fdc-b7c0-c962e01ad60d',
+    'Content-Type': 'application/json'
+  }
+})
 
 const pageData = Promise.all([api.getInfo(), api.getCards()])
 

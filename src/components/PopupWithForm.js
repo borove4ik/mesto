@@ -15,7 +15,6 @@ export class PopupWithForm extends Popup {
     this.inputList = this.form.querySelectorAll(".popup__input");
     this.submit = this.popup.querySelector(".popup__button");
     this.buttonTextContent = this.submit.textContent;
-    console.log(this.buttonTextContent)
     this._inputValues = {};
     this.validatorInstance =validatorInstance;
   }

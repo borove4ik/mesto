@@ -57,7 +57,9 @@
           link: link
         })
       })
-      .then(this.onResponse)
+      .then((res) => {
+        return this.onResponse(res)
+       } )
     }
 
     deleteCard({_id}) {
@@ -73,7 +75,9 @@
         method: isLiked ? 'DELETE' : 'PUT', 
         headers: this._headers,
     })
-    .then(this.onResponse)
+    .then((res) => {
+      return this.onResponse(res)
+    })
   }
 
   updateAvatar({link}) {

@@ -29,9 +29,6 @@ confirmPopup.setEventListeners()
 
 const handleLikePost = (instance) => {
   api.changeLike(instance._id, instance.isLiked())
-  .then((res) => {
-    return api.onResponse(res)
-  })
   .then(dataCardFromServer => {
     instance.setLikesData(dataCardFromServer)
   })
@@ -49,8 +46,6 @@ const getCardLayout = (cardData, userId) => {
     }, handleLikePost,
     userId
   ).createCard();
- 
-
   return card;
 };
 
@@ -64,7 +59,9 @@ const userInfo = new UserInfo({
   userAvatar: ".profile__avatar"
 });
 const pageData = Promise.all([api.getInfo(), api.getCards()])
-.then ((res) => {return res})
+.then((res) => {
+  return res
+})
 .then((res) => {
     userInfo.setUserInfo({
       inputName: res[0].name,
@@ -73,9 +70,9 @@ const pageData = Promise.all([api.getInfo(), api.getCards()])
     })
     return res
   })
-  .catch((res) => {
-    console.log(res.status)
-  })
+  // .catch((res) => {
+  //   console.log(res.status)
+  // })
   
   const feed = pageData.then((pageData) => {
   const cardList = new Section(
@@ -140,7 +137,6 @@ const placeEdit = new PopupWithForm(
   "#popup-new-place",
   (formData) => {
       api.setCard(formData)
-      .then(api.onResponse)
       .then((cardData)=>{
         feed.then((data) => {
           data.addItem(getCardLayout(cardData, api.getInfoResponse._id))
@@ -164,9 +160,6 @@ const avatarUpdate = new PopupWithForm(
   (inputData) => {
    pageData.then(() => {
     api.updateAvatar(inputData)
-    .then((res) => {
-      return api.onResponse(res)
-    })
     .then((userData) => {
       userInfo.setUserInfo({
         inputName: userData.name, 

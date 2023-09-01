@@ -70,9 +70,9 @@ const pageData = Promise.all([api.getInfo(), api.getCards()])
     })
     return res
   })
-  // .catch((res) => {
-  //   console.log(res.status)
-  // })
+  .catch((res) => {
+    console.log(res.status)
+  })
   
   const feed = pageData.then((pageData) => {
   const cardList = new Section(

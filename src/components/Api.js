@@ -4,17 +4,6 @@
         this._headers = headers;
         this.getInfoResponse = null;
         this.getCardsResponse = null;
-        this.buttonTextChanger = '';
-        this.closeForm = ''
-    }
-
-    receiveButtonTextChanger(buttonTextChanger) {
-      this.buttonTextChanger = buttonTextChanger
-    }
-
-    receiveCloseFormMethod(closeForm) {
-      
-      this.closeForm = closeForm;
     }
 
     onResponse(res) {
@@ -31,9 +20,7 @@
             this.getInfoResponse = res
           return res
           })
-          .catch((res) => {
-            console.log(res.status)
-          })
+          
     }
 
     getCards() {
@@ -45,9 +32,6 @@
             .then((res) => {
               this.getCardsResponse = res
               return res
-            })
-            .catch((res) => {
-              console.log(res.status)
             })
       }
 
@@ -61,6 +45,7 @@
         })
        
       })
+      .then(this.onResponse)
     } 
 
     setCard({name, link}) {
@@ -72,6 +57,7 @@
           link: link
         })
       })
+      .then(this.onResponse)
     }
 
     deleteCard({_id}) {
@@ -79,7 +65,7 @@
         method: 'DELETE', 
         headers: this._headers,
       })
-      
+      .then(this.onResponse)
     }
 
     changeLike(cardId, isLiked) {
@@ -87,6 +73,7 @@
         method: isLiked ? 'DELETE' : 'PUT', 
         headers: this._headers,
     })
+    .then(this.onResponse)
   }
 
   updateAvatar({link}) {
@@ -97,6 +84,6 @@
         avatar: link
       })
     })
-    
+    .then(this.onResponse)
   }
 }

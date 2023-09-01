@@ -73,6 +73,9 @@ const pageData = Promise.all([api.getInfo(), api.getCards()])
     })
     return res
   })
+  .catch((res) => {
+    console.log(res.status)
+  })
   
   const feed = pageData.then((pageData) => {
   const cardList = new Section(
@@ -103,21 +106,19 @@ const hideErrorAndEnableSubmit = (validatorInstance) => {
 const editProfileForm = new PopupWithForm(
   "#profile-popup",
   (inputData) => {
-    api.receiveButtonTextChanger(editProfileForm.resetDeployRequestStatus)
-    api.receiveCloseFormMethod(editProfileForm.close)
     api.setInfo(inputData)
     .then((res) => {
       return api.onResponse(res)
     })
     .then(() =>{
       userInfo.setUserInfo(inputData)
+      editProfileForm.close()
     })
     .catch((res) => {
       console.log(res.status)
     })
     .finally(() => {
-      api.buttonTextChanger()
-      api.closeForm()
+      editProfileForm.resetDeployRequestStatus()
     })
     
     
@@ -138,22 +139,19 @@ profileEditTrigger.addEventListener("click", () => {
 const placeEdit = new PopupWithForm(
   "#popup-new-place",
   (formData) => {
-      api.receiveButtonTextChanger(placeEdit.resetDeployRequestStatus)
-      api.receiveCloseFormMethod(placeEdit.close)
       api.setCard(formData)
       .then(api.onResponse)
       .then((cardData)=>{
         feed.then((data) => {
           data.addItem(getCardLayout(cardData, api.getInfoResponse._id))
-          api.closeForm()
+          placeEdit.close()
         })
       })
       .catch((res) => {
         console.log(res.status)
       })
       .finally(() => {
-        api.buttonTextChanger()
-        api.closeForm()
+        placeEdit.resetDeployRequestStatus()
       })
   },
   hideErrorAndEnableSubmit,
@@ -165,8 +163,6 @@ const avatarUpdate = new PopupWithForm(
   "#popup-avatar",
   (inputData) => {
    pageData.then(() => {
-    api.receiveCloseFormMethod(avatarUpdate.close)
-    api.receiveButtonTextChanger(avatarUpdate.resetDeployRequestStatus)
     api.updateAvatar(inputData)
     .then((res) => {
       return api.onResponse(res)
@@ -176,13 +172,13 @@ const avatarUpdate = new PopupWithForm(
         inputName: userData.name, 
         inputInfo: userData.about, 
         userAvatar: userData.avatar})
+        avatarUpdate.close()
     })
     .catch((res) => {
       console.log(res.status)
     })
     .finally(() => {
-      api.buttonTextChanger()
-      api.closeForm()
+      avatarUpdate.resetDeployRequestStatus()
     })
    })
   },

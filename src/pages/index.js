@@ -17,8 +17,6 @@ export const api = new Api({
   }
 })
 
-const pageData = Promise.all([api.getInfo(), api.getCards()])
-
 const photoPopup = new PopupWithImage("#popup-open-card");
 
 const handleCardClick = (cardData) => {
@@ -31,8 +29,14 @@ confirmPopup.setEventListeners()
 
 const handleLikePost = (instance) => {
   api.changeLike(instance._id, instance.isLiked())
+  .then((res) => {
+    return api.onResponse(res)
+  })
   .then(dataCardFromServer => {
     instance.setLikesData(dataCardFromServer)
+  })
+  .catch((res) => {
+    console.log(res.status)
   })
 }
 
@@ -45,43 +49,44 @@ const getCardLayout = (cardData, userId) => {
     }, handleLikePost,
     userId
   ).createCard();
-  photoPopup.setEventListeners();
+ 
 
   return card;
 };
 
+photoPopup.setEventListeners();
 
-const feed = pageData
-.then(([userData, initialCards]) => {
-  const cardList = new Section(
-    {
-      items: initialCards,
-      renderer: (cardData) => {
-        cardList.addItem(getCardLayout(cardData, userData._id));
-      },
-    },
-    ".gallery"
-  );
-  
-  cardList._renderItems();
-  return cardList
-})
+
 
 const userInfo = new UserInfo({
   userName: ".profile__name",
   userInfo: ".profile__description",
   userAvatar: ".profile__avatar"
 });
-
-pageData
-.then(([userData]) => {
-  userInfo.setUserInfo({
-    inputName: userData.name,
-    inputInfo: userData.about,
-    userAvatar: userData.avatar
+const pageData = Promise.all([api.getInfo(), api.getCards()])
+.then ((res) => {return res})
+.then((res) => {
+    userInfo.setUserInfo({
+      inputName: res[0].name,
+      inputInfo: res[0].about,
+      userAvatar: res[0].avatar
+    })
+    return res
   })
+  
+  const feed = pageData.then((pageData) => {
+  const cardList = new Section(
+    {
+      items: pageData[1],
+      renderer: (cardData) => {
+        cardList.addItem(getCardLayout(cardData, pageData[0]._id))
+      }
+    }, 
+    ".gallery"
+  )
+  cardList.renderItems()
+  return cardList
 })
-.catch((err) => console.log(err))
 
 const profileFormElement = document.querySelector("#profile-edit");
 const placeFormElement = document.querySelector("#place-edit");
@@ -100,8 +105,21 @@ const editProfileForm = new PopupWithForm(
   (inputData) => {
     api.receiveButtonTextChanger(editProfileForm.resetDeployRequestStatus)
     api.receiveCloseFormMethod(editProfileForm.close)
-    api.setInfo(inputData);
-    userInfo.setUserInfo(inputData);
+    api.setInfo(inputData)
+    .then((res) => {
+      return api.onResponse(res)
+    })
+    .then(() =>{
+      userInfo.setUserInfo(inputData)
+    })
+    .catch((res) => {
+      console.log(res.status)
+    })
+    .finally(() => {
+      api.buttonTextChanger()
+      api.closeForm()
+    })
+    
     
   },
   hideErrorAndEnableSubmit,
@@ -120,18 +138,23 @@ profileEditTrigger.addEventListener("click", () => {
 const placeEdit = new PopupWithForm(
   "#popup-new-place",
   (formData) => {
-    pageData.then(() => {
       api.receiveButtonTextChanger(placeEdit.resetDeployRequestStatus)
       api.receiveCloseFormMethod(placeEdit.close)
       api.setCard(formData)
-      .then( (cardData) => {
+      .then(api.onResponse)
+      .then((cardData)=>{
         feed.then((data) => {
           data.addItem(getCardLayout(cardData, api.getInfoResponse._id))
           api.closeForm()
         })
-      }) 
-    })
-    
+      })
+      .catch((res) => {
+        console.log(res.status)
+      })
+      .finally(() => {
+        api.buttonTextChanger()
+        api.closeForm()
+      })
   },
   hideErrorAndEnableSubmit,
   placeFormValidator,
@@ -145,11 +168,21 @@ const avatarUpdate = new PopupWithForm(
     api.receiveCloseFormMethod(avatarUpdate.close)
     api.receiveButtonTextChanger(avatarUpdate.resetDeployRequestStatus)
     api.updateAvatar(inputData)
+    .then((res) => {
+      return api.onResponse(res)
+    })
     .then((userData) => {
       userInfo.setUserInfo({
         inputName: userData.name, 
         inputInfo: userData.about, 
         userAvatar: userData.avatar})
+    })
+    .catch((res) => {
+      console.log(res.status)
+    })
+    .finally(() => {
+      api.buttonTextChanger()
+      api.closeForm()
     })
    })
   },

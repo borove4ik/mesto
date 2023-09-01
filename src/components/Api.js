@@ -15,10 +15,9 @@
     receiveCloseFormMethod(closeForm) {
       
       this.closeForm = closeForm;
-      console.log(this.closeForm)
     }
 
-    #onResponse(res) {
+    onResponse(res) {
         return res.ok ? res.json() : console.log(res.status) 
     }
 
@@ -27,7 +26,7 @@
         method: "GET",
             headers: this._headers
           })
-          .then(this.#onResponse)
+          .then(this.onResponse)
           .then((res) => {
             this.getInfoResponse = res
           return res
@@ -42,7 +41,7 @@
           method: "GET",
           headers: this._headers
             })
-            .then(this.#onResponse)
+            .then(this.onResponse)
             .then((res) => {
               this.getCardsResponse = res
               return res
@@ -62,16 +61,6 @@
         })
        
       })
-      .then((res) => {
-        this.#onResponse(res)
-      })
-      .catch((res) => {
-        console.log(res.status)
-      })
-      .finally(() => {
-        this.buttonTextChanger()
-        this.closeForm()
-      })
     } 
 
     setCard({name, link}) {
@@ -83,40 +72,20 @@
           link: link
         })
       })
-      .then(this.#onResponse)
-      .catch((res) => {
-        console.log(res.status)
-      })
-      .finally(() => {
-        this.buttonTextChanger()
-        this.closeForm()
-      })
     }
 
-    deleteCard({_id, card}) {
+    deleteCard({_id}) {
       return fetch(`${this._url}/cards/${_id}`, {
         method: 'DELETE', 
         headers: this._headers,
       })
-      .then(() => {
-        card.remove()
-      this.closeForm()
-      })
-      .catch((res) => {
-        console.log(res.status)
-      })
+      
     }
 
     changeLike(cardId, isLiked) {
       return fetch(`${this._url}/cards/${cardId}/likes`, {
         method: isLiked ? 'DELETE' : 'PUT', 
         headers: this._headers,
-    })
-    .then((res) => {
-      return this.#onResponse(res)
-    })
-    .catch((res) => {
-      console.log(res.status)
     })
   }
 
@@ -128,16 +97,6 @@
         avatar: link
       })
     })
-    .then((res) => {
-      return this.#onResponse(res)
-    })
-    .then()
-    .catch((res) => {
-      console.log(res.status)
-    })
-    .finally(() => {
-      this.buttonTextChanger()
-      this.closeForm()
-    })
+    
   }
 }

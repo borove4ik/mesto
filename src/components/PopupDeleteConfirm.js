@@ -16,8 +16,12 @@ export class PopupDeleteConfirm extends Popup{
     }
 
     deleteButtonHandleClick = () => {
-        api.deleteCard({_id: this.cardId, card: this.card});
-        api.receiveCloseFormMethod(this.close)
+        api.deleteCard({_id: this.cardId})
+        .then(() => {
+            this.card.remove()
+            this.close()
+          })
+          .catch(api.onResponse)
     }
 
     setEventListeners() {

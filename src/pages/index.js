@@ -51,17 +51,12 @@ const getCardLayout = (cardData, userId) => {
 
 photoPopup.setEventListeners();
 
-
-
 const userInfo = new UserInfo({
   userName: ".profile__name",
   userInfo: ".profile__description",
   userAvatar: ".profile__avatar"
 });
 const pageData = Promise.all([api.getInfo(), api.getCards()])
-.then((res) => {
-  return res
-})
 .then((res) => {
     userInfo.setUserInfo({
       inputName: res[0].name,
@@ -88,6 +83,7 @@ const pageData = Promise.all([api.getInfo(), api.getCards()])
   return cardList
 })
 
+
 const profileFormElement = document.querySelector("#profile-edit");
 const placeFormElement = document.querySelector("#place-edit");
 const avatarFormElement = document.querySelector("#avatar-edit")
@@ -104,9 +100,6 @@ const editProfileForm = new PopupWithForm(
   "#profile-popup",
   (inputData) => {
     api.setInfo(inputData)
-    .then((res) => {
-      return api.onResponse(res)
-    })
     .then(() =>{
       userInfo.setUserInfo(inputData)
       editProfileForm.close()
@@ -117,8 +110,6 @@ const editProfileForm = new PopupWithForm(
     .finally(() => {
       editProfileForm.resetDeployRequestStatus()
     })
-    
-    
   },
   hideErrorAndEnableSubmit,
   profileFormValidator

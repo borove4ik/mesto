@@ -7,7 +7,7 @@
     }
 
     onResponse(res) {
-        return res.ok ? res.json() : console.log(res.status) 
+        return res.ok ? res.json() : console.log(res);
     }
 
     getInfo() {
@@ -15,7 +15,9 @@
         method: "GET",
             headers: this._headers
           })
-          .then(this.onResponse)
+          .then((res) => {
+            return this.onResponse(res)
+          })
           .then((res) => {
             this.getInfoResponse = res
           return res

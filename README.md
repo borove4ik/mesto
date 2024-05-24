@@ -4,7 +4,12 @@
 
 Mesto - это интерактивная веб-страница для выкладывания картинок с возможностью ставить лайки, удалять фото, регистрировать пользователя.
 
-Использован стек: HTML - CSS - JavaScript - ООП
+# Использован стек 
+HTML - CSS - JavaScript - ООП
 
- Ссылка на проект: https://borove4ik.github.io/mesto/
+# Адрес проекта
+https://borove4ik.github.io/mesto/
+
+# Статус проекта и планы
+На данный момент проект завершён. В планах [Рефакторинг на React](https://github.com/borove4ik/react-mesto-api-full-gha).
 
